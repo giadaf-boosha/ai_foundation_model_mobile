@@ -1,115 +1,163 @@
-# Foundation Model On-Device per Dispositivi Mobili
+<div align="center">
 
-> Ricerca approfondita sui foundation model locali per iOS e Android, architetture agentiche e integrazione nelle app mobile.
+# Foundation Models On-Device
 
-![On-Device AI](https://developer.apple.com/news/images/og/apple-intelligence-og.png)
-*AI on-device: esecuzione locale di modelli linguistici su smartphone*
+**Guida completa ai Large Language Models su dispositivi mobili iOS e Android**
+
+[![Research Status](https://img.shields.io/badge/status-research-blue?style=for-the-badge)](https://github.com/giadaf-boosha/ai_foundation_model_mobile)
+[![Last Updated](https://img.shields.io/badge/updated-January%202026-green?style=for-the-badge)](#)
+[![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey?style=for-the-badge)](#)
+[![Language](https://img.shields.io/badge/lang-IT-red?style=for-the-badge)](#)
+[![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)](LICENSE)
+
+<br/>
+
+[**Quick Start**](#-quick-start) · [**Documentation**](#-contenuti) · [**Examples**](#-esempi-di-codice) · [**Contribute**](#-contribuire)
+
+<br/>
+
+<img src="https://developer.apple.com/news/images/og/apple-intelligence-og.png" alt="On-Device AI" width="600"/>
+
+*Esegui LLM direttamente su smartphone: privacy totale, zero latenza, funzionamento offline*
+
+</div>
 
 ---
 
-## Contenuti del repository
+## Overview
+
+Questo repository contiene una **ricerca approfondita** sui foundation model che possono essere eseguiti localmente su dispositivi mobili, senza dipendenza dal cloud.
+
+### Perche on-device AI?
+
+| Vantaggio | Descrizione |
+|-----------|-------------|
+| **Privacy** | I dati non lasciano mai il dispositivo |
+| **Latenza** | Risposte istantanee senza round-trip di rete |
+| **Offline** | Funziona senza connessione internet |
+| **Costi** | Zero costi di inference cloud |
+
+### Quando usare questa guida
+
+- Stai sviluppando un'app iOS/Android con AI locale
+- Vuoi capire le differenze tra Apple FM, Gemini Nano e Gemma
+- Hai bisogno di implementare function calling on-device
+- Vuoi ottimizzare modelli LLM per mobile (quantizzazione)
+
+---
+
+## Key Features
+
+- **Documentazione completa** - Guide teoriche e pratiche in italiano
+- **Ecosistema Apple** - Foundation Models Framework, guided generation, LoRA
+- **Ecosistema Google** - Gemini Nano, Gemma 3n, MediaPipe, FunctionGemma
+- **Tabelle comparative** - iOS vs Android, modelli, hardware NPU, performance
+- **Codice pronto all'uso** - 6 esempi Swift e Kotlin funzionanti
+- **100+ risorse curate** - Link a docs ufficiali, paper, tutorial
+
+---
+
+## Quick Start
+
+### Per capire i concetti (no codice)
+
+```bash
+# Leggi la guida teorica
+open concepts_theory.md
+```
+
+### Per implementare subito (iOS)
+
+```swift
+import FoundationModels
+
+let session = LanguageModelSession()
+let response = try await session.respond(to: "Ciao!")
+print(response)
+```
+
+### Per implementare subito (Android)
+
+```kotlin
+val inference = InferenceClient.create(context)
+val response = inference.generate("Ciao!")
+println(response)
+```
+
+> **Vedi [examples/](examples/)** per codice completo pronto da copiare.
+
+---
+
+## Contenuti
 
 ### Documenti principali
 
 | File | Descrizione |
-|------|-------------|
-| **[concepts_theory.md](concepts_theory.md)** | Guida teorica completa ai concetti fondamentali. Solo testo, nessun codice. Ideale per comprendere i concetti. |
-| **[original_report.md](original_report.md)** | Report completo con esempi di codice Swift e Kotlin. Include implementazioni passo-passo per iOS e Android. |
-| **[RESOURCES.md](RESOURCES.md)** | Raccolta curata di 100+ link a documentazione, tutorial, articoli, repository GitHub, paper accademici e cookbook. |
-| **[comparisons.md](comparisons.md)** | Tabelle comparative dettagliate: iOS vs Android, modelli, hardware, API, performance, developer experience. |
+|:-----|:------------|
+| [**concepts_theory.md**](concepts_theory.md) | Guida teorica completa (no codice) |
+| [**original_report.md**](original_report.md) | Report con esempi Swift e Kotlin |
+| [**RESOURCES.md**](RESOURCES.md) | 100+ link curati |
+| [**comparisons.md**](comparisons.md) | Tabelle comparative dettagliate |
 
 ### Approfondimenti tematici
 
 | File | Argomento |
-|------|-----------|
-| **[deep_dives/quantization.md](deep_dives/quantization.md)** | Guida completa alla quantizzazione: GGUF, GPTQ, AWQ, QAT vs PTQ, ottimizzazioni per mobile. |
-| **[deep_dives/agentic_architectures.md](deep_dives/agentic_architectures.md)** | Architetture agentiche: ReAct, planning agents, multi-agent, memoria gerarchica, Edge General Intelligence. |
-| **[deep_dives/function_calling.md](deep_dives/function_calling.md)** | Function calling e tool use: Apple Foundation Models, FunctionGemma, MCP protocol, pattern di implementazione. |
-| **[deep_dives/personal_intelligence.md](deep_dives/personal_intelligence.md)** | **NUOVO:** Google Personal Intelligence, context packing, cloud vs on-device, confronto con Apple Intelligence. |
+|:-----|:----------|
+| [**deep_dives/quantization.md**](deep_dives/quantization.md) | GGUF, GPTQ, AWQ, QAT vs PTQ |
+| [**deep_dives/agentic_architectures.md**](deep_dives/agentic_architectures.md) | ReAct, planning agents, multi-agent |
+| [**deep_dives/function_calling.md**](deep_dives/function_calling.md) | Tool calling Apple/Google, MCP |
+| [**deep_dives/personal_intelligence.md**](deep_dives/personal_intelligence.md) | Google Personal Intelligence (Gen 2026) |
 
-### Esempi di codice
+---
 
-| Cartella | Contenuto |
-|----------|-----------|
-| **[examples/ios/](examples/)** | 3 esempi Swift: BasicChat, StreamingChat, ToolCallingExample |
-| **[examples/android/](examples/)** | 3 esempi Kotlin: BasicChat, MediaPipeLLM, FunctionCalling |
+## Esempi di codice
+
+### iOS (Swift)
+
+| File | Complessita | Descrizione |
+|:-----|:------------|:------------|
+| [BasicChat.swift](examples/ios/BasicChat.swift) | Base | Chat semplice con sessione |
+| [StreamingChat.swift](examples/ios/StreamingChat.swift) | Intermedio | Streaming token-by-token |
+| [ToolCallingExample.swift](examples/ios/ToolCallingExample.swift) | Avanzato | Weather, Calculator, Reminder tools |
+
+### Android (Kotlin)
+
+| File | Complessita | Descrizione |
+|:-----|:------------|:------------|
+| [BasicChatActivity.kt](examples/android/BasicChatActivity.kt) | Base | Chat con Gemini Nano |
+| [MediaPipeLLMExample.kt](examples/android/MediaPipeLLMExample.kt) | Intermedio | Modelli Gemma custom |
+| [FunctionCallingExample.kt](examples/android/FunctionCallingExample.kt) | Avanzato | FunctionGemma tools |
+
+<details>
+<summary><strong>Requisiti per gli esempi</strong></summary>
+
+#### iOS
+- Xcode 17+
+- iOS 26+ / macOS 26+
+- Dispositivo con Apple Intelligence (A17 Pro+)
+
+#### Android
+- Android Studio Ladybug+
+- Android 14+ (API 34+)
+- Dispositivo con AICore o MediaPipe
+
+</details>
 
 ---
 
 ## Argomenti trattati
 
-1. **Foundation model on-device** - Definizione, vantaggi, sfide tecniche, stato dell'arte 2026
-2. **Ecosistema Apple** - Foundation Models Framework, guided generation, tool calling, LoRA
-3. **Ecosistema Google** - Gemini Nano, Gemma 3n, ML Kit GenAI, MediaPipe
-4. **Parametri di configurazione** - Temperature, top-k, top-p, context window, seed
-5. **Architetture agentiche** - ReAct, planning agents, multi-agent, memoria gerarchica
-6. **Function calling e tools** - MCP, FunctionGemma, implementazioni pratiche
-7. **Quantizzazione** - PTQ, QAT, GGUF, AWQ, GPTQ, ottimizzazioni mobile
-8. **Confronto iOS vs Android** - Hardware, API, facilità di sviluppo, quando scegliere cosa
-9. **Personal Intelligence** - La nuova feature cloud-based di Google Gemini (Gennaio 2026)
-
----
-
-## Quick start
-
-### Per capire i concetti teorici
-Inizia da **[concepts_theory.md](concepts_theory.md)** - spiega tutto in linguaggio discorsivo senza codice.
-
-### Per implementare subito
-Vai alla cartella **[examples/](examples/)** - contiene codice Swift e Kotlin pronto da copiare.
-
-### Per confrontare le opzioni
-Consulta **[comparisons.md](comparisons.md)** - tabelle dettagliate per ogni aspetto.
-
-### Per approfondire un topic
-Esplora **[deep_dives/](deep_dives/)** - guide complete su quantizzazione, architetture agentiche e function calling.
-
-### Per trovare risorse esterne
-Vai a **[RESOURCES.md](RESOURCES.md)** - 100+ link curati a documentazione, tutorial e paper.
-
----
-
-## Quick links
-
-### Documentazione ufficiale
-
-#### Apple
-- [Foundation Models Documentation](https://developer.apple.com/documentation/FoundationModels)
-- [WWDC25: Meet the Foundation Models framework](https://developer.apple.com/videos/play/wwdc2025/286/)
-- [WWDC25: Deep dive into Foundation Models](https://developer.apple.com/videos/play/wwdc2025/301/)
-- [Apple ML Research](https://machinelearning.apple.com/research/apple-foundation-models-2025-updates)
-
-#### Google
-- [Gemini Nano Overview](https://developer.android.com/ai/gemini-nano)
-- [ML Kit GenAI APIs](https://developers.google.com/ml-kit/genai)
-- [MediaPipe LLM Inference](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference)
-- [Gemma 3n Announcement](https://developers.googleblog.com/en/introducing-gemma-3n/)
-- [FunctionGemma](https://blog.google/technology/developers/functiongemma/)
-- [Google AI Edge Gallery](https://github.com/google-ai-edge/gallery)
-- **[Personal Intelligence (Gennaio 2026)](https://blog.google/innovation-and-ai/products/gemini-app/personal-intelligence/)** - Nuova feature cloud-based
-
-### Repository GitHub essenziali
-
-| Repository | Descrizione |
-|------------|-------------|
-| [ml-explore/mlx-swift](https://github.com/ml-explore/mlx-swift) | MLX per Swift (Apple) |
-| [ml-explore/mlx-swift-examples](https://github.com/ml-explore/mlx-swift-examples) | Esempi MLX Swift |
-| [google-gemini/gemma-cookbook](https://github.com/google-gemini/gemma-cookbook) | Cookbook ufficiale Gemma |
-| [google-ai-edge/gallery](https://github.com/google-ai-edge/gallery) | Google AI Edge Gallery |
-| [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) | Inference LLM in C/C++ |
-| [stevelaskaridis/awesome-mobile-llm](https://github.com/stevelaskaridis/awesome-mobile-llm) | Lista curata mobile LLM |
-
-### Tutorial consigliati
-
-| Titolo | Piattaforma | Link |
-|--------|-------------|------|
-| Getting Started with Apple's Foundation Models | iOS | [Blog](https://artemnovichkov.com/blog/getting-started-with-apple-foundation-models) |
-| The Ultimate Guide To Foundation Models Framework | iOS | [AzamSharp](https://azamsharp.com/2025/06/18/the-ultimate-guide-to-the-foundation-models-framework.html) |
-| Complete Guide to Running LLMs on Android with MediaPipe | Android | [Medium](https://rockyshikoku.medium.com/running-llm-on-android-devices-complete-guide-with-mediapipe-on-device-inference-957daa537f52) |
-| LLM Inference on Edge with React Native | Cross-platform | [Hugging Face](https://huggingface.co/blog/llm-inference-on-edge) |
-| On-Device Function Calling with FunctionGemma | Android | [Medium](https://medium.com/google-developer-experts/on-device-function-calling-with-functiongemma-39f7407e5d83) |
-
-> **Vedi [RESOURCES.md](RESOURCES.md) per la lista completa di 100+ risorse!**
+| # | Argomento | Copertura |
+|:-:|:----------|:----------|
+| 1 | Foundation model on-device | Definizione, vantaggi, sfide, stato 2026 |
+| 2 | Ecosistema Apple | FM Framework, guided generation, LoRA |
+| 3 | Ecosistema Google | Gemini Nano, Gemma 3n, MediaPipe |
+| 4 | Parametri di generazione | Temperature, top-k, top-p, context window |
+| 5 | Architetture agentiche | ReAct, planning, multi-agent, memoria |
+| 6 | Function calling | MCP, FunctionGemma, Tool protocol |
+| 7 | Quantizzazione | PTQ, QAT, GGUF, AWQ, GPTQ |
+| 8 | Confronto piattaforme | Hardware, API, DX, decision matrix |
+| 9 | Personal Intelligence | Cloud vs on-device, context packing |
 
 ---
 
@@ -117,37 +165,129 @@ Vai a **[RESOURCES.md](RESOURCES.md)** - 100+ link curati a documentazione, tuto
 
 ```
 ai/
-├── README.md                    # Questo file
-├── concepts_theory.md           # Guida teorica (no codice)
-├── original_report.md           # Report completo con codice
-├── RESOURCES.md                 # 100+ link curati
-├── comparisons.md               # Tabelle comparative
+├── README.md                     # Questo file
+├── concepts_theory.md            # Guida teorica
+├── original_report.md            # Report con codice
+├── RESOURCES.md                  # Link curati
+├── comparisons.md                # Tabelle comparative
 │
-├── deep_dives/                  # Approfondimenti tematici
-│   ├── quantization.md          # Guida quantizzazione
-│   ├── agentic_architectures.md # Architetture agentiche
-│   ├── function_calling.md      # Function calling e tools
-│   └── personal_intelligence.md # Google Personal Intelligence (NEW)
+├── deep_dives/                   # Approfondimenti
+│   ├── quantization.md
+│   ├── agentic_architectures.md
+│   ├── function_calling.md
+│   └── personal_intelligence.md
 │
-└── examples/                    # Codice pronto all'uso
-    ├── README.md                # Istruzioni per gli esempi
-    ├── ios/                     # Esempi Swift
-    │   ├── BasicChat.swift
-    │   ├── StreamingChat.swift
-    │   └── ToolCallingExample.swift
-    │
-    └── android/                 # Esempi Kotlin
-        ├── BasicChatActivity.kt
-        ├── MediaPipeLLMExample.kt
-        └── FunctionCallingExample.kt
+└── examples/                     # Codice
+    ├── ios/                      # Swift examples
+    └── android/                  # Kotlin examples
 ```
+
+---
+
+## Quick Links
+
+<table>
+<tr>
+<td width="50%">
+
+### Apple
+
+- [Foundation Models Docs](https://developer.apple.com/documentation/FoundationModels)
+- [WWDC25: Meet FM Framework](https://developer.apple.com/videos/play/wwdc2025/286/)
+- [WWDC25: Deep Dive FM](https://developer.apple.com/videos/play/wwdc2025/301/)
+- [Apple ML Research](https://machinelearning.apple.com/research/)
+
+</td>
+<td width="50%">
+
+### Google
+
+- [Gemini Nano](https://developer.android.com/ai/gemini-nano)
+- [ML Kit GenAI](https://developers.google.com/ml-kit/genai)
+- [MediaPipe LLM](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference)
+- [Gemma 3n](https://developers.googleblog.com/en/introducing-gemma-3n/)
+
+</td>
+</tr>
+</table>
+
+### GitHub essenziali
+
+| Repository | Descrizione |
+|:-----------|:------------|
+| [ml-explore/mlx-swift](https://github.com/ml-explore/mlx-swift) | MLX per Swift |
+| [google-gemini/gemma-cookbook](https://github.com/google-gemini/gemma-cookbook) | Cookbook Gemma |
+| [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp) | LLM inference C++ |
+| [google-ai-edge/gallery](https://github.com/google-ai-edge/gallery) | AI Edge Gallery |
+
+---
+
+## Roadmap / Status
+
+| Status | Descrizione |
+|:------:|:------------|
+| Done | Ricerca completata (Gennaio 2026) |
+| Done | Documentazione teorica |
+| Done | Esempi codice iOS/Android |
+| Done | Deep dives tematici |
+| Done | 100+ risorse curate |
+| Ongoing | Aggiornamenti periodici |
+
+> **Note:** Questo e un progetto di **ricerca e documentazione**, non una libreria software.
 
 ---
 
 ## Contribuire
 
-Se conosci risorse utili non incluse, apri una issue o una pull request!
+I contributi sono benvenuti! Ecco come puoi aiutare:
+
+- **Segnala errori** - Apri una [issue](https://github.com/giadaf-boosha/ai_foundation_model_mobile/issues)
+- **Suggerisci risorse** - Conosci link utili non inclusi?
+- **Traduzioni** - Aiuta a tradurre in altre lingue
+- **Esempi di codice** - Aggiungi implementazioni
+
+```bash
+# Fork e clone
+git clone https://github.com/YOUR_USERNAME/ai_foundation_model_mobile.git
+
+# Crea branch
+git checkout -b feature/my-contribution
+
+# Commit e push
+git commit -m "docs: add new resource"
+git push origin feature/my-contribution
+
+# Apri Pull Request
+```
 
 ---
 
+## License
+
+Distribuito sotto licenza **MIT**. Vedi [LICENSE](LICENSE) per dettagli.
+
+```
+MIT License
+
+Copyright (c) 2026
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+```
+
+---
+
+<div align="center">
+
+**Se trovi utile questo repository, lascia una star!**
+
+<br/>
+
+[Torna all'inizio](#foundation-models-on-device)
+
+<br/>
+
 *Ricerca completata: Gennaio 2026*
+
+</div>
