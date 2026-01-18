@@ -15,6 +15,8 @@
 8. [Confronto tra piattaforme](#8-confronto-tra-piattaforme)
 9. [Glossario](#9-glossario)
 
+> **Guida Pratica**: Per dettagli implementativi su architetture MVVM, integrazione SwiftUI/Compose, persistenza dati e code examples, vedi [deep_dives/ai_native_integration.md](deep_dives/ai_native_integration.md)
+
 ---
 
 ## 1. Introduzione ai foundation model on-device

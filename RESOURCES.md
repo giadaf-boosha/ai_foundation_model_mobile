@@ -154,12 +154,32 @@
 | Implement Local LLMs on iOS with MLX | Adrián Ramírez | [Medium](https://medium.com/@ale058791/build-an-on-device-ai-text-generator-for-ios-with-mlx-fdd2bea1f410) |
 | How to integrate a Large Language Model into an iOS Application | Nguyen Hai Nam | [Medium](https://medium.com/@namcuong2711/how-to-integrate-a-large-language-model-into-an-ios-application-2579d9d119b0) |
 | How to Run a Local LLM (e.g., LLaMA 3) on iOS | Shahinoor Shahin | [Medium](https://medium.com/@shahin.cse.sust/how-to-run-a-local-llm-e-g-llama-3-on-ios-b5a16b4e4a1c) |
+| Building an AI ChatBot with Apple's Foundation Models Framework | JC | [Medium](https://medium.com/@jc_builds/building-an-ai-chatbot-with-apples-foundation-models-framework-a-complete-swiftui-guide-de0347c0b18b) |
+| Exploring the Foundation Models framework | Create with Swift | [Blog](https://www.createwithswift.com/exploring-the-foundation-models-framework/) |
+| Getting Started with Apple Foundation Models for Local AI in SwiftUI | Ottorino Bruni | [Blog](https://www.ottorinobruni.com/getting-started-with-apple-foundation-models-for-local-ai-in-swiftui/) |
+| Apple Foundation Models Tutorial iOS 26 | iPhone Developers | [Blog](https://www.iphonedevelopers.co.uk/2025/07/apple-foundation-models-ios-tutorial.html) |
 
 ### Android specifici
 
 | Titolo | Autore | Link |
 |--------|--------|------|
 | AI Building Blocks for Android: ML Kit, TensorFlow Lite, and LLM APIs | Manu Misra | [Medium](https://medium.com/@manu706/ai-building-blocks-for-android-ml-kit-tensorflow-lite-and-llm-apis-what-android-devs-need-to-277b9236d32f) |
+| Integrate Gemini with Jetpack Compose — the quick way! | Developer Chunk | [Medium](https://medium.com/@developerchunk/integrate-gemini-with-jetpack-compose-the-quick-way-5f5069cb23f0) |
+| Building a Gemini API Sample in Jetpack Compose with Room and Koin | Brilian Ade Putra | [Medium](https://medium.com/@brilianadeputra/building-a-gemini-api-sample-in-jetpack-compose-with-room-and-koin-a-complete-guide-59b3dfbc8697) |
+| Android App Architecture Patterns 2025: Building Scalable Apps with Hilt, Navigation, and ViewModel | Android Lab | [Medium](https://medium.com/@androidlab/android-app-architecture-patterns-2025-building-scalable-apps-with-hilt-navigation-and-viewmodel-29d2f588d1eb) |
+
+### Architetture e Pattern con AI
+
+| Titolo | Autore | Link |
+|--------|--------|------|
+| Inside FoundationModels: How Sessions Actually Work | Luiz Fernando Salvaterra | [Medium](https://medium.com/@luizfernandosalvaterra/inside-foundationmodels-how-sessions-actually-work-1a250bb30110) |
+| LLM Context Management: How to Improve Performance and Lower Costs | 16x Engineer | [Blog](https://eval.16x.engineer/blog/llm-context-management-guide) |
+| The Art of LLM Context Management: Optimizing AI Agents for App Development | Ravi Khurana | [Medium](https://medium.com/@ravikhurana_38440/the-art-of-llm-context-management-optimizing-ai-agents-for-app-development-e5ef9fcf8f75) |
+| LLM Context Engineering: a practical guide | Zheng Bruce Li | [Medium](https://medium.com/the-low-end-disruptor/llm-context-engineering-a-practical-guide-248095d4bf71) |
+| The Ultimate Guide to LLM Memory: From Context Windows to Advanced Agent Memory Systems | Tanishk Soni | [Medium](https://medium.com/@sonitanishk2003/the-ultimate-guide-to-llm-memory-from-context-windows-to-advanced-agent-memory-systems-3ec106d2a345) |
+| Integrating LLMs in Mobile Apps: Challenges & Best Practices (2025 Guide) | The Useful Apps | [Article](https://www.theusefulapps.com/news/integrating-llms-mobile-challenges-best-practices-2025) |
+| Hilt vs. Koin: A 2025 Perspective on Android DI | Jamshidbek Boynazarov | [Medium](https://jamshidbekboynazarov.medium.com/hilt-vs-koin-a-2025-perspective-on-android-di-139b27d684e1) |
+| The Ultimate Guide to Modern iOS Architecture in 2025 | Max | [Medium](https://medium.com/@csmax/the-ultimate-guide-to-modern-ios-architecture-in-2025-9f0d5fdc892f) |
 
 ### Function Calling e Agenti
 
