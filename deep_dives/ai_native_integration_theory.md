@@ -1,4 +1,4 @@
-# Foundation Models e Sviluppo Nativo Mobile: Guida Teorica
+# Foundation models e sviluppo nativo mobile: guida teorica
 
 > Una spiegazione narrativa e concettuale di come i modelli AI on-device si integrano con i componenti primitivi dello sviluppo mobile nativo.
 
@@ -6,20 +6,20 @@
 
 ## Indice
 
-1. [Introduzione: Un Nuovo Paradigma di Sviluppo](#1-introduzione-un-nuovo-paradigma-di-sviluppo)
-2. [Il Ruolo del Modello nell'Architettura dell'App](#2-il-ruolo-del-modello-nellarchitettura-dellapp)
-3. [La Sessione: Cuore dell'Interazione con l'AI](#3-la-sessione-cuore-dellinterazione-con-lai)
-4. [Gestione del Contesto: La Memoria del Modello](#4-gestione-del-contesto-la-memoria-del-modello)
-5. [Il Flusso dei Dati: Dall'Input dell'Utente alla Risposta](#5-il-flusso-dei-dati-dallinput-dellutente-alla-risposta)
-6. [Streaming: L'Arte di Mostrare Risposte Progressive](#6-streaming-larte-di-mostrare-risposte-progressive)
-7. [Persistenza: Salvare le Conversazioni](#7-persistenza-salvare-le-conversazioni)
-8. [Tool Calling: Quando il Modello Agisce nel Mondo Reale](#8-tool-calling-quando-il-modello-agisce-nel-mondo-reale)
-9. [Gestione degli Errori: Prepararsi all'Imprevisto](#9-gestione-degli-errori-prepararsi-allimprevisto)
-10. [Considerazioni di Design per Sviluppatori](#10-considerazioni-di-design-per-sviluppatori)
+1. [Introduzione: un nuovo paradigma di sviluppo](#1-introduzione-un-nuovo-paradigma-di-sviluppo)
+2. [Il ruolo del modello nell'architettura dell'app](#2-il-ruolo-del-modello-nellarchitettura-dellapp)
+3. [La sessione: cuore dell'interazione con l'AI](#3-la-sessione-cuore-dellinterazione-con-lai)
+4. [Gestione del contesto: la memoria del modello](#4-gestione-del-contesto-la-memoria-del-modello)
+5. [Il flusso dei dati: dall'input dell'utente alla risposta](#5-il-flusso-dei-dati-dallinput-dellutente-alla-risposta)
+6. [Streaming: l'arte di mostrare risposte progressive](#6-streaming-larte-di-mostrare-risposte-progressive)
+7. [Persistenza: salvare le conversazioni](#7-persistenza-salvare-le-conversazioni)
+8. [Tool calling: quando il modello agisce nel mondo reale](#8-tool-calling-quando-il-modello-agisce-nel-mondo-reale)
+9. [Gestione degli errori: prepararsi all'imprevisto](#9-gestione-degli-errori-prepararsi-allimprevisto)
+10. [Considerazioni di design per sviluppatori](#10-considerazioni-di-design-per-sviluppatori)
 
 ---
 
-## 1. Introduzione: Un Nuovo Paradigma di Sviluppo
+## 1. Introduzione: un nuovo paradigma di sviluppo
 
 L'introduzione dei foundation model on-device rappresenta un cambiamento fondamentale nel modo in cui pensiamo alle applicazioni mobili. Per la prima volta, gli sviluppatori possono integrare capacità di intelligenza artificiale generativa direttamente nelle loro app senza dipendere da connessioni di rete o servizi cloud.
 
@@ -27,7 +27,7 @@ Tuttavia, questa nuova possibilità porta con sé una domanda cruciale: **dove s
 
 La risposta non è banale. Un modello linguistico non è semplicemente un'altra API da chiamare o un database da interrogare. È un componente con caratteristiche uniche: mantiene stato (la conversazione), richiede risorse significative (memoria e CPU/NPU), e produce output in modo progressivo (streaming di token). Queste peculiarità richiedono un ripensamento di come strutturiamo le nostre applicazioni.
 
-### La Filosofia delle Due Piattaforme
+### La filosofia delle due piattaforme
 
 Apple e Google hanno adottato approcci filosoficamente diversi all'integrazione dell'AI on-device, e queste differenze si riflettono profondamente nel modo in cui gli sviluppatori devono strutturare le loro applicazioni.
 
@@ -37,15 +37,15 @@ Apple e Google hanno adottato approcci filosoficamente diversi all'integrazione 
 
 ---
 
-## 2. Il Ruolo del Modello nell'Architettura dell'App
+## 2. Il ruolo del modello nell'architettura dell'app
 
-### Il Dibattito Eterno: MVC, MVVM, Clean Architecture
+### Il dibattito eterno: MVC, MVVM, Clean Architecture
 
-Gli sviluppatori mobile hanno familiarità con i pattern architetturali classici. Model-View-Controller (MVC) separa i dati dalla presentazione e dalla logica di controllo. Model-View-ViewModel (MVVM) introduce un intermediario che prepara i dati per la visualizzazione. Clean Architecture aggiunge ulteriori layer di astrazione con Use Case e Repository.
+Gli sviluppatori mobile hanno familiarità con i pattern architetturali classici. Model-View-Controller (MVC) separa i dati dalla presentazione e dalla logica di controllo. Model-View-ViewModel (MVVM) introduce un intermediario che prepara i dati per la visualizzazione. Clean Architecture aggiunge ulteriori layer di astrazione con use case e repository.
 
 L'arrivo dei foundation model non invalida questi pattern, ma richiede di ripensare dove collocare questo nuovo componente.
 
-### Il Modello AI Non È un Database
+### Il modello AI non è un database
 
 Un errore comune è trattare il modello AI come si tratterebbe un database o un'API REST. Si potrebbe pensare: "mando una query, ricevo una risposta, fine". Ma questa analogia è fuorviante per diversi motivi.
 
@@ -55,17 +55,17 @@ Un errore comune è trattare il modello AI come si tratterebbe un database o un'
 
 **Terzo**, il modello può fallire in modi peculiari. Oltre agli errori tecnici standard, può esaurire il contesto disponibile, può produrre output malformati, può "allucinare" informazioni false. La gestione degli errori deve tenere conto di queste possibilità uniche.
 
-### Dove Collocare la Sessione AI
+### Dove collocare la sessione AI
 
 Data questa complessità, dove dovrebbe vivere la sessione AI nell'architettura dell'applicazione?
 
-La risposta più comune è: **nel ViewModel** (per MVVM) o nel **Repository** (per Clean Architecture).
+La risposta più comune è: **nel ViewModel** (per MVVM) o nel **repository** (per Clean Architecture).
 
 Il ViewModel è una scelta naturale perché già gestisce lo stato dell'interfaccia utente e coordina le operazioni asincrone. La sessione AI diventa parte dello stato che il ViewModel espone alla View. Quando l'utente invia un messaggio, il ViewModel inoltra la richiesta alla sessione, riceve lo stream di token, e aggiorna lo stato dell'UI progressivamente.
 
-In architetture più complesse, ha senso isolare l'interazione con l'AI in un Repository dedicato. Questo Repository diventa il Single Source of Truth per tutto ciò che riguarda l'AI: gestisce la sessione, mantiene la storia delle conversazioni, si occupa della persistenza. Il ViewModel interagisce con questo Repository senza conoscere i dettagli implementativi del modello sottostante.
+In architetture più complesse, ha senso isolare l'interazione con l'AI in un repository dedicato. Questo repository diventa il single source of truth per tutto ciò che riguarda l'AI: gestisce la sessione, mantiene la storia delle conversazioni, si occupa della persistenza. Il ViewModel interagisce con questo repository senza conoscere i dettagli implementativi del modello sottostante.
 
-### L'Importanza dell'Astrazione
+### L'importanza dell'astrazione
 
 Qualunque sia l'architettura scelta, è fondamentale creare un'astrazione adeguata attorno al modello AI. Le ragioni sono molteplici.
 
@@ -77,15 +77,15 @@ Qualunque sia l'architettura scelta, è fondamentale creare un'astrazione adegua
 
 ---
 
-## 3. La Sessione: Cuore dell'Interazione con l'AI
+## 3. La sessione: cuore dell'interazione con l'AI
 
-### Cos'è una Sessione
+### Cos'è una sessione
 
 Nel contesto dei foundation model on-device, una "sessione" rappresenta un contesto di conversazione isolato. È l'equivalente di una chat aperta con un assistente: tutto ciò che viene detto all'interno di quella sessione contribuisce al contesto condiviso.
 
 Su iOS, Apple fornisce l'oggetto `LanguageModelSession`. Su Android, il concetto è meno esplicito: lo sviluppatore deve gestire manualmente il contesto della conversazione, costruendo prompt che includono la storia dei messaggi precedenti.
 
-### Ciclo di Vita della Sessione
+### Ciclo di vita della sessione
 
 Una sessione nasce quando l'utente inizia una nuova conversazione. Da quel momento, accumula progressivamente informazioni: i prompt dell'utente, le risposte del modello, le istruzioni di sistema. Questo accumulo continua finché la sessione non viene distrutta o finché il contesto non si esaurisce.
 
@@ -96,7 +96,7 @@ Il ciclo di vita tipico è:
 3. **Persistenza** (opzionale): l'applicazione salva lo stato della conversazione per permettere all'utente di riprendere successivamente
 4. **Distruzione**: la sessione viene terminata, liberando le risorse associate
 
-### Sessioni Single-Turn vs Multi-Turn
+### Sessioni single-turn vs multi-turn
 
 Non tutte le interazioni con un modello linguistico richiedono il mantenimento del contesto. Esistono due modalità fondamentali:
 
@@ -106,7 +106,7 @@ Non tutte le interazioni con un modello linguistico richiedono il mantenimento d
 
 La scelta tra queste modalità ha implicazioni importanti sulla gestione delle risorse. Le sessioni multi-turn consumano più memoria (devono mantenere la storia) e possono incontrare limiti di contesto più rapidamente.
 
-### Il Problema della Concorrenza
+### Il problema della concorrenza
 
 Un aspetto critico delle sessioni AI è che generalmente non supportano richieste concorrenti. Se l'utente invia un nuovo messaggio mentre il modello sta ancora generando una risposta, il comportamento può essere imprevedibile: alcune implementazioni accodano la richiesta, altre la rifiutano con un errore, altre ancora interrompono la generazione in corso.
 
@@ -114,15 +114,15 @@ L'applicazione deve gestire questo scenario esplicitamente. L'approccio più com
 
 ---
 
-## 4. Gestione del Contesto: La Memoria del Modello
+## 4. Gestione del contesto: la memoria del modello
 
-### La Finestra di Contesto
+### La finestra di contesto
 
 I modelli linguistici hanno una "memoria" limitata chiamata finestra di contesto (context window). Questa finestra definisce quanti token il modello può considerare simultaneamente durante la generazione. Tutto ciò che cade fuori da questa finestra viene effettivamente "dimenticato".
 
 Per i modelli on-device, le finestre di contesto sono relativamente piccole rispetto ai loro equivalenti cloud. Il modello di Apple supporta circa 4.096 token. Gemini Nano e Gemma variano, ma raramente superano gli 8.192 token. A confronto, i modelli cloud come GPT-4 possono gestire 128.000 token o più.
 
-### Cosa Consuma il Contesto
+### Cosa consuma il contesto
 
 Il contesto viene consumato da diversi elementi:
 
@@ -134,7 +134,7 @@ Il contesto viene consumato da diversi elementi:
 
 **Risposta in generazione**: il modello deve riservare spazio anche per la risposta che sta generando.
 
-### Strategie di Gestione del Contesto
+### Strategie di gestione del contesto
 
 Quando una conversazione rischia di superare la finestra di contesto, l'applicazione deve adottare strategie per rimanere entro i limiti.
 
@@ -146,7 +146,7 @@ Quando una conversazione rischia di superare la finestra di contesto, l'applicaz
 
 **Nuova sessione con contesto**: quando il contesto si esaurisce, si può creare una nuova sessione inizializzandola con un riassunto della conversazione precedente. L'utente non percepisce l'interruzione, ma tecnicamente si tratta di una sessione fresca.
 
-### Monitorare l'Utilizzo del Contesto
+### Monitorare l'utilizzo del contesto
 
 Le applicazioni ben progettate monitorano attivamente l'utilizzo del contesto. Questo può tradursi in indicatori visuali per l'utente ("La conversazione sta diventando lunga, potresti voler iniziare una nuova chat") o in azioni automatiche quando si avvicina il limite.
 
@@ -154,21 +154,21 @@ Stimare l'utilizzo del contesto richiede una comprensione della tokenizzazione. 
 
 ---
 
-## 5. Il Flusso dei Dati: Dall'Input dell'Utente alla Risposta
+## 5. Il flusso dei dati: dall'input dell'utente alla risposta
 
-### Anatomia di una Richiesta
+### Anatomia di una richiesta
 
 Quando l'utente invia un messaggio a un'applicazione con AI integrata, si innesca una catena di eventi che attraversa tutti i layer dell'architettura.
 
 **Layer UI**: l'utente digita un messaggio e preme invio. La View cattura questo input e lo passa al ViewModel (o equivalente).
 
-**Layer di Presentazione**: il ViewModel riceve l'input, lo valida, aggiorna lo stato dell'UI per mostrare che una richiesta è in corso (indicatore di caricamento, disabilitazione dell'input), e delega l'operazione al layer sottostante.
+**Layer di presentazione**: il ViewModel riceve l'input, lo valida, aggiorna lo stato dell'UI per mostrare che una richiesta è in corso (indicatore di caricamento, disabilitazione dell'input), e delega l'operazione al layer sottostante.
 
-**Layer di Dominio/Dati**: il Repository (o Use Case) riceve la richiesta, interagisce con la sessione AI, e inizia a ricevere la risposta. Durante la generazione, le risposte parziali vengono propagate verso l'alto attraverso i layer.
+**Layer di dominio/dati**: il repository (o use case) riceve la richiesta, interagisce con la sessione AI, e inizia a ricevere la risposta. Durante la generazione, le risposte parziali vengono propagate verso l'alto attraverso i layer.
 
 **Ritorno alla UI**: ogni frammento di risposta ricevuto causa un aggiornamento dello stato nel ViewModel, che a sua volta causa un re-render della View con il nuovo contenuto.
 
-### Unidirectional Data Flow
+### Unidirectional data flow
 
 Il pattern di "flusso di dati unidirezionale" si adatta perfettamente all'integrazione AI. Lo stato fluisce in una sola direzione (dal modello dati alla UI), mentre gli eventi fluiscono nella direzione opposta (dalla UI alle azioni).
 
@@ -180,7 +180,7 @@ In questo modello:
 
 Questo pattern è particolarmente importante con l'AI perché le risposte sono asincrone e progressive. Avere un flusso di dati chiaro e prevedibile semplifica enormemente il debugging e previene stati inconsistenti.
 
-### Reattività e Osservabilità
+### Reattività e osservabilità
 
 Sia SwiftUI che Jetpack Compose sono framework dichiarativi e reattivi. La UI viene descritta come funzione dello stato: quando lo stato cambia, la UI si aggiorna automaticamente.
 
@@ -192,21 +192,21 @@ Questa reattività è fondamentale per lo streaming delle risposte AI: ogni nuov
 
 ---
 
-## 6. Streaming: L'Arte di Mostrare Risposte Progressive
+## 6. Streaming: l'arte di mostrare risposte progressive
 
-### Perché Lo Streaming È Importante
+### Perché lo streaming è importante
 
 Immaginate di chiedere a un assistente AI di scrivere un paragrafo. Senza streaming, l'utente vedrebbe uno spinner di caricamento per diversi secondi, seguito dalla comparsa improvvisa dell'intero testo. Con lo streaming, le parole appaiono progressivamente, come se l'assistente stesse effettivamente digitando.
 
 La differenza in termini di esperienza utente è drammatica. Lo streaming riduce la latenza percepita: l'utente inizia a leggere immediatamente invece di aspettare. Fornisce inoltre feedback continuo: l'utente vede che qualcosa sta accadendo, riducendo l'incertezza e la frustrazione.
 
-### Come Funziona Tecnicamente
+### Come funziona tecnicamente
 
 I modelli linguistici generano testo un token alla volta. Durante l'inferenza, il modello predice il prossimo token basandosi sui token precedenti (sia quelli del prompt che quelli già generati). Questo processo si ripete finché non viene raggiunto un token di fine sequenza o un limite massimo.
 
 Lo streaming espone questo processo incrementale all'applicazione. Invece di attendere il completamento dell'intera generazione, l'applicazione riceve notifiche ad ogni nuovo token (o gruppo di token) prodotto.
 
-### Snapshot vs Delta
+### Snapshot vs delta
 
 Esistono due approcci principali per comunicare le risposte parziali:
 
@@ -216,7 +216,7 @@ Esistono due approcci principali per comunicare le risposte parziali:
 
 Lo snapshot streaming ha vantaggi in contesti dichiarativi: non richiede logica di concatenazione, e si integra naturalmente con il binding dello stato delle UI moderne. Tuttavia, trasmette più dati ridondanti.
 
-### Output Strutturato e Streaming
+### Output strutturato e streaming
 
 Un caso particolarmente interessante è lo streaming di output strutturato. Quando il modello genera un oggetto con campi multipli (nome, descrizione, lista di elementi...), i campi vengono popolati progressivamente.
 
@@ -224,7 +224,7 @@ Apple ha introdotto il concetto di "PartiallyGenerated" per gestire questo scena
 
 Questo permette pattern UI sofisticati: ad esempio, mostrare il titolo di una ricetta appena disponibile, poi gli ingredienti mentre vengono generati, infine i passaggi. L'interfaccia si popola progressivamente invece di apparire tutta insieme.
 
-### Considerazioni di UI Design
+### Considerazioni di UI design
 
 Lo streaming richiede attenzione nel design dell'interfaccia:
 
@@ -238,15 +238,15 @@ Lo streaming richiede attenzione nel design dell'interfaccia:
 
 ---
 
-## 7. Persistenza: Salvare le Conversazioni
+## 7. Persistenza: salvare le conversazioni
 
-### Perché Persistere
+### Perché persistere
 
 Molte applicazioni AI beneficiano dalla capacità di salvare e riprendere conversazioni. Un utente potrebbe voler continuare una discussione iniziata giorni prima, o riferirsi a informazioni scambiate in una sessione precedente.
 
 La persistenza serve anche scopi tecnici: se l'applicazione viene terminata dal sistema operativo per liberare memoria, l'utente non dovrebbe perdere la conversazione in corso.
 
-### Cosa Salvare
+### Cosa salvare
 
 La persistenza di una conversazione AI richiede di salvare diversi elementi:
 
@@ -256,7 +256,7 @@ La persistenza di una conversazione AI richiede di salvare diversi elementi:
 
 **Stato della sessione** (opzionale): alcune implementazioni permettono di serializzare l'intero stato della sessione AI, incluso il contesto interno. Questo permette di riprendere esattamente dove si era interrotto, senza dover ricostruire il contesto dai messaggi.
 
-### Tecnologie di Persistenza
+### Tecnologie di persistenza
 
 Su iOS, le opzioni principali sono:
 
@@ -272,9 +272,9 @@ Su Android, le opzioni includono:
 
 **DataStore**: adatto per dati semplici e preferenze, meno per strutture complesse come conversazioni.
 
-**File system con Serialization**: simile a iOS, JSON o Protocol Buffers possono essere usati per persistenza file-based.
+**File system con serialization**: simile a iOS, JSON o Protocol Buffers possono essere usati per persistenza file-based.
 
-### Pattern di Repository per la Persistenza
+### Pattern di repository per la persistenza
 
 Un pattern comune è avere un repository che astrae sia l'interazione con l'AI che la persistenza:
 
@@ -282,7 +282,7 @@ Il repository espone metodi come "ottieni conversazione", "salva messaggio", "ca
 
 Questo approccio centralizza la logica e garantisce coerenza tra lo stato in memoria e quello persistito.
 
-### Sincronizzazione e Conflitti
+### Sincronizzazione e conflitti
 
 Per applicazioni che supportano più dispositivi, la sincronizzazione delle conversazioni introduce complessità aggiuntiva.
 
@@ -292,15 +292,15 @@ Per le conversazioni AI, una strategia comune è trattare ogni messaggio come im
 
 ---
 
-## 8. Tool Calling: Quando il Modello Agisce nel Mondo Reale
+## 8. Tool calling: quando il modello agisce nel mondo reale
 
-### Oltre la Generazione di Testo
+### Oltre la generazione di testo
 
 I modelli linguistici sono straordinariamente capaci nel manipolare testo, ma le applicazioni reali spesso richiedono di più. Un utente potrebbe chiedere "Che tempo fa a Milano?" o "Aggiungi un evento al calendario per domani alle 15". Queste richieste richiedono l'accesso a dati o servizi esterni che il modello non possiede intrinsecamente.
 
 Il "tool calling" (o "function calling") è il meccanismo che permette al modello di invocare funzioni definite dallo sviluppatore per compiere azioni nel mondo reale.
 
-### Come Funziona Concettualmente
+### Come funziona concettualmente
 
 Il processo di tool calling segue tipicamente questo flusso:
 
@@ -310,7 +310,7 @@ Il processo di tool calling segue tipicamente questo flusso:
 4. **Esecuzione**: l'applicazione riceve questa richiesta, esegue l'azione corrispondente, e restituisce il risultato al modello
 5. **Completamento**: il modello usa il risultato per formulare la risposta finale all'utente
 
-### Definire Tool Efficaci
+### Definire tool efficaci
 
 La qualità del tool calling dipende fortemente da come i tool vengono definiti.
 
@@ -322,7 +322,7 @@ La qualità del tool calling dipende fortemente da come i tool vengono definiti.
 
 **Esempi impliciti**: nelle istruzioni di sistema, includere esempi di quando usare ciascun tool migliora significativamente l'accuratezza.
 
-### Integrazione con API di Sistema
+### Integrazione con API di sistema
 
 I tool più potenti sono quelli che integrano l'AI con le capacità native del dispositivo:
 
@@ -338,7 +338,7 @@ I tool più potenti sono quelli che integrano l'AI con le capacità native del d
 
 Queste integrazioni trasformano l'assistente AI da un semplice generatore di testo a un agente capace di compiere azioni concrete.
 
-### Considerazioni di Sicurezza
+### Considerazioni di sicurezza
 
 Il tool calling introduce rischi che devono essere gestiti con attenzione:
 
@@ -352,9 +352,9 @@ Il tool calling introduce rischi che devono essere gestiti con attenzione:
 
 ---
 
-## 9. Gestione degli Errori: Prepararsi all'Imprevisto
+## 9. Gestione degli errori: prepararsi all'imprevisto
 
-### Tipi di Errori nell'AI On-Device
+### Tipi di errori nell'AI on-device
 
 L'integrazione AI introduce categorie di errori specifiche che vanno oltre i classici errori di rete o database:
 
@@ -368,7 +368,7 @@ L'integrazione AI introduce categorie di errori specifiche che vanno oltre i cla
 
 **Errori di tool**: l'esecuzione di un tool può fallire per ragioni proprie (rete non disponibile, permessi negati, servizio esterno in errore).
 
-### Strategie di Recupero
+### Strategie di recupero
 
 Per ciascun tipo di errore, l'applicazione dovrebbe avere una strategia di recupero:
 
@@ -380,7 +380,7 @@ Per ciascun tipo di errore, l'applicazione dovrebbe avere una strategia di recup
 
 **Feedback all'utente**: comunicare chiaramente cosa è andato storto e, se possibile, cosa l'utente può fare. Messaggi come "Abilita Apple Intelligence nelle Impostazioni" sono più utili di generici "Si è verificato un errore".
 
-### Logging e Monitoraggio
+### Logging e monitoraggio
 
 Per migliorare l'affidabilità nel tempo, è importante raccogliere dati sugli errori:
 
@@ -394,9 +394,9 @@ Questi dati permettono di identificare pattern problematici e prioritizzare le c
 
 ---
 
-## 10. Considerazioni di Design per Sviluppatori
+## 10. Considerazioni di design per sviluppatori
 
-### Iniziare Semplice
+### Iniziare semplice
 
 L'integrazione AI può diventare molto complessa, ma è saggio iniziare con l'implementazione più semplice possibile:
 
@@ -406,7 +406,7 @@ L'integrazione AI può diventare molto complessa, ma è saggio iniziare con l'im
 
 Una volta che questo funziona, si può iterare aggiungendo feature: persistenza, tool, streaming sofisticato, gestione avanzata del contesto.
 
-### Testare l'Imprevedibile
+### Testare l'imprevedibile
 
 I modelli linguistici sono intrinsecamente non deterministici. Lo stesso prompt può produrre risposte diverse in esecuzioni successive. Questo rende il testing tradizionale difficile.
 
@@ -418,7 +418,7 @@ Strategie utili includono:
 
 **Test con utenti reali**: nessun testing automatizzato può sostituire l'osservazione di come utenti reali interagiscono con l'AI.
 
-### Performance e Risorse
+### Performance e risorse
 
 L'inferenza AI è computazionalmente intensiva. Considerazioni chiave:
 
@@ -430,7 +430,7 @@ L'inferenza AI è computazionalmente intensiva. Considerazioni chiave:
 
 **Battery awareness**: in modalità risparmio energetico, considerare di disabilitare o limitare le funzionalità AI.
 
-### Privacy by Design
+### Privacy by design
 
 L'AI on-device offre vantaggi di privacy rispetto al cloud, ma richiede comunque attenzione:
 
@@ -452,7 +452,7 @@ Le funzionalità AI dovrebbero essere accessibili a tutti gli utenti:
 
 ---
 
-## Conclusione: Un Nuovo Capitolo nello Sviluppo Mobile
+## Conclusione: un nuovo capitolo nello sviluppo mobile
 
 L'integrazione dei foundation model on-device segna l'inizio di un nuovo capitolo nello sviluppo di applicazioni mobili. Per la prima volta, capacità di intelligenza artificiale generativa sofisticata sono disponibili direttamente sul dispositivo dell'utente, senza dipendenze cloud.
 
@@ -464,4 +464,4 @@ Gli sviluppatori che padroneggiano questi concetti saranno in grado di creare la
 
 *Per esempi di codice e implementazioni pratiche, vedi [ai_native_integration.md](ai_native_integration.md)*
 
-*Ultimo aggiornamento: Gennaio 2026*
+*Ultimo aggiornamento: gennaio 2026*
