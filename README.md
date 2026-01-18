@@ -6,11 +6,29 @@
 
 ## Contenuti del repository
 
+### Documenti principali
+
 | File | Descrizione |
 |------|-------------|
 | **[concepts_theory.md](concepts_theory.md)** | Guida teorica completa ai concetti fondamentali. Solo testo, nessun codice. Ideale per comprendere i concetti. |
 | **[original_report.md](original_report.md)** | Report completo con esempi di codice Swift e Kotlin. Include implementazioni passo-passo per iOS e Android. |
-| **[RESOURCES.md](RESOURCES.md)** | Raccolta curata di link a documentazione, tutorial, articoli, repository GitHub, paper accademici e cookbook. |
+| **[RESOURCES.md](RESOURCES.md)** | Raccolta curata di 100+ link a documentazione, tutorial, articoli, repository GitHub, paper accademici e cookbook. |
+| **[comparisons.md](comparisons.md)** | Tabelle comparative dettagliate: iOS vs Android, modelli, hardware, API, performance, developer experience. |
+
+### Approfondimenti tematici
+
+| File | Argomento |
+|------|-----------|
+| **[deep_dives/quantization.md](deep_dives/quantization.md)** | Guida completa alla quantizzazione: GGUF, GPTQ, AWQ, QAT vs PTQ, ottimizzazioni per mobile. |
+| **[deep_dives/agentic_architectures.md](deep_dives/agentic_architectures.md)** | Architetture agentiche: ReAct, planning agents, multi-agent, memoria gerarchica, Edge General Intelligence. |
+| **[deep_dives/function_calling.md](deep_dives/function_calling.md)** | Function calling e tool use: Apple Foundation Models, FunctionGemma, MCP protocol, pattern di implementazione. |
+
+### Esempi di codice
+
+| Cartella | Contenuto |
+|----------|-----------|
+| **[examples/ios/](examples/)** | 3 esempi Swift: BasicChat, StreamingChat, ToolCallingExample |
+| **[examples/android/](examples/)** | 3 esempi Kotlin: BasicChat, MediaPipeLLM, FunctionCalling |
 
 ---
 
@@ -22,8 +40,27 @@
 4. **Parametri di configurazione** - Temperature, top-k, top-p, context window, seed
 5. **Architetture agentiche** - ReAct, planning agents, multi-agent, memoria gerarchica
 6. **Function calling e tools** - MCP, FunctionGemma, implementazioni pratiche
-7. **Quantizzazione** - PTQ, QAT, GGUF, ottimizzazioni mobile
+7. **Quantizzazione** - PTQ, QAT, GGUF, AWQ, GPTQ, ottimizzazioni mobile
 8. **Confronto iOS vs Android** - Hardware, API, facilità di sviluppo, quando scegliere cosa
+
+---
+
+## Quick start
+
+### Per capire i concetti teorici
+Inizia da **[concepts_theory.md](concepts_theory.md)** - spiega tutto in linguaggio discorsivo senza codice.
+
+### Per implementare subito
+Vai alla cartella **[examples/](examples/)** - contiene codice Swift e Kotlin pronto da copiare.
+
+### Per confrontare le opzioni
+Consulta **[comparisons.md](comparisons.md)** - tabelle dettagliate per ogni aspetto.
+
+### Per approfondire un topic
+Esplora **[deep_dives/](deep_dives/)** - guide complete su quantizzazione, architetture agentiche e function calling.
+
+### Per trovare risorse esterne
+Vai a **[RESOURCES.md](RESOURCES.md)** - 100+ link curati a documentazione, tutorial e paper.
 
 ---
 
@@ -66,20 +103,37 @@
 | LLM Inference on Edge with React Native | Cross-platform | [Hugging Face](https://huggingface.co/blog/llm-inference-on-edge) |
 | On-Device Function Calling with FunctionGemma | Android | [Medium](https://medium.com/google-developer-experts/on-device-function-calling-with-functiongemma-39f7407e5d83) |
 
-> **Vedi [RESOURCES.md](RESOURCES.md) per la lista completa di risorse!**
+> **Vedi [RESOURCES.md](RESOURCES.md) per la lista completa di 100+ risorse!**
 
 ---
 
-## Come usare questo repository
+## Struttura del repository
 
-### Per capire i concetti teorici
-Inizia da **[concepts_theory.md](concepts_theory.md)** - spiega tutto in linguaggio discorsivo senza codice.
-
-### Per implementare
-Passa a **[original_report.md](original_report.md)** - contiene esempi di codice Swift e Kotlin pronti all'uso.
-
-### Per approfondire
-Consulta **[RESOURCES.md](RESOURCES.md)** - contiene link a tutorial, paper, cookbook e repository per ogni argomento.
+```
+ai/
+├── README.md                    # Questo file
+├── concepts_theory.md           # Guida teorica (no codice)
+├── original_report.md           # Report completo con codice
+├── RESOURCES.md                 # 100+ link curati
+├── comparisons.md               # Tabelle comparative
+│
+├── deep_dives/                  # Approfondimenti tematici
+│   ├── quantization.md          # Guida quantizzazione
+│   ├── agentic_architectures.md # Architetture agentiche
+│   └── function_calling.md      # Function calling e tools
+│
+└── examples/                    # Codice pronto all'uso
+    ├── README.md                # Istruzioni per gli esempi
+    ├── ios/                     # Esempi Swift
+    │   ├── BasicChat.swift
+    │   ├── StreamingChat.swift
+    │   └── ToolCallingExample.swift
+    │
+    └── android/                 # Esempi Kotlin
+        ├── BasicChatActivity.kt
+        ├── MediaPipeLLMExample.kt
+        └── FunctionCallingExample.kt
+```
 
 ---
 
