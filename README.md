@@ -16,8 +16,6 @@
 
 <br/>
 
-<img src="https://developer.apple.com/news/images/og/apple-intelligence-og.png" alt="On-Device AI" width="600"/>
-
 *Esegui LLM direttamente su smartphone: privacy totale, zero latenza, funzionamento offline*
 
 </div>
