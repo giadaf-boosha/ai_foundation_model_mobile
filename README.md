@@ -2,6 +2,9 @@
 
 > Ricerca approfondita sui foundation model locali per iOS e Android, architetture agentiche e integrazione nelle app mobile.
 
+![On-Device AI](https://developer.apple.com/news/images/og/apple-intelligence-og.png)
+*AI on-device: esecuzione locale di modelli linguistici su smartphone*
+
 ---
 
 ## Contenuti del repository
@@ -22,6 +25,7 @@
 | **[deep_dives/quantization.md](deep_dives/quantization.md)** | Guida completa alla quantizzazione: GGUF, GPTQ, AWQ, QAT vs PTQ, ottimizzazioni per mobile. |
 | **[deep_dives/agentic_architectures.md](deep_dives/agentic_architectures.md)** | Architetture agentiche: ReAct, planning agents, multi-agent, memoria gerarchica, Edge General Intelligence. |
 | **[deep_dives/function_calling.md](deep_dives/function_calling.md)** | Function calling e tool use: Apple Foundation Models, FunctionGemma, MCP protocol, pattern di implementazione. |
+| **[deep_dives/personal_intelligence.md](deep_dives/personal_intelligence.md)** | **NUOVO:** Google Personal Intelligence, context packing, cloud vs on-device, confronto con Apple Intelligence. |
 
 ### Esempi di codice
 
@@ -42,6 +46,7 @@
 6. **Function calling e tools** - MCP, FunctionGemma, implementazioni pratiche
 7. **Quantizzazione** - PTQ, QAT, GGUF, AWQ, GPTQ, ottimizzazioni mobile
 8. **Confronto iOS vs Android** - Hardware, API, facilità di sviluppo, quando scegliere cosa
+9. **Personal Intelligence** - La nuova feature cloud-based di Google Gemini (Gennaio 2026)
 
 ---
 
@@ -81,6 +86,7 @@ Vai a **[RESOURCES.md](RESOURCES.md)** - 100+ link curati a documentazione, tuto
 - [Gemma 3n Announcement](https://developers.googleblog.com/en/introducing-gemma-3n/)
 - [FunctionGemma](https://blog.google/technology/developers/functiongemma/)
 - [Google AI Edge Gallery](https://github.com/google-ai-edge/gallery)
+- **[Personal Intelligence (Gennaio 2026)](https://blog.google/innovation-and-ai/products/gemini-app/personal-intelligence/)** - Nuova feature cloud-based
 
 ### Repository GitHub essenziali
 
@@ -120,7 +126,8 @@ ai/
 ├── deep_dives/                  # Approfondimenti tematici
 │   ├── quantization.md          # Guida quantizzazione
 │   ├── agentic_architectures.md # Architetture agentiche
-│   └── function_calling.md      # Function calling e tools
+│   ├── function_calling.md      # Function calling e tools
+│   └── personal_intelligence.md # Google Personal Intelligence (NEW)
 │
 └── examples/                    # Codice pronto all'uso
     ├── README.md                # Istruzioni per gli esempi

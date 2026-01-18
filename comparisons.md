@@ -2,6 +2,9 @@
 
 > Confronti dettagliati tra piattaforme, modelli, API e performance per lo sviluppo di applicazioni AI mobile.
 
+![iOS vs Android AI](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*3LNqyZWcE9JFh6hVJjJXYA.png)
+*Ecosistema AI on-device: Apple vs Google*
+
 ---
 
 ## Indice
@@ -22,8 +25,8 @@
 
 | Aspetto | iOS (Apple) | Android (Google) |
 |---------|-------------|------------------|
-| **Modello principale** | Apple FM (~3B) | Gemini Nano / Gemma 3n |
-| **Framework** | Foundation Models | ML Kit GenAI + MediaPipe |
+| **Modello principale** | [Apple FM](https://developer.apple.com/documentation/FoundationModels) (~3B) | [Gemini Nano](https://developer.android.com/ai/gemini-nano) / [Gemma 3n](https://developers.googleblog.com/en/introducing-gemma-3n/) |
+| **Framework** | [Foundation Models](https://developer.apple.com/documentation/FoundationModels) | [ML Kit GenAI](https://developers.google.com/ml-kit/genai) + [MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference) |
 | **Disponibilità** | iOS/macOS 26+ | Android 14+ (AICore) |
 | **Approccio** | Verticalmente integrato | Modulare/flessibile |
 | **Modelli custom** | LoRA adapters | Qualsiasi modello GGUF |
@@ -86,6 +89,8 @@
 ## Hardware e NPU
 
 ### Neural Processing Unit - Specifiche
+
+> Vedi anche: [Wikipedia - Neural Processing Unit](https://en.wikipedia.org/wiki/Neural_processing_unit)
 
 | Chip | Dispositivo | NPU TOPS | RAM max | Anno |
 |------|-------------|----------|---------|------|

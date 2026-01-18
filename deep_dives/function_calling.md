@@ -1,6 +1,9 @@
 # Function Calling e Tool Use per LLM Mobile: Guida Completa
 
-> Approfondimento tecnico su come implementare function calling e tool use su dispositivi mobili iOS e Android.
+> Approfondimento tecnico su come implementare [function calling](https://platform.openai.com/docs/guides/function-calling) e tool use su dispositivi mobili iOS e Android.
+
+![Function Calling Flow](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*RIx6gKqE8JLbJxd9tYQq5A.png)
+*Flow tipico di una chiamata a funzione in un LLM*
 
 ---
 
@@ -62,7 +65,10 @@ Il tempo a Milano è generalmente... [informazioni potenzialmente obsolete]
 
 ### Overview (WWDC 2025)
 
-Apple ha introdotto il **Foundation Models framework** alla WWDC 2025, dando agli sviluppatori accesso diretto al modello on-device (~3B parametri) che alimenta Apple Intelligence.
+Apple ha introdotto il **[Foundation Models framework](https://developer.apple.com/documentation/FoundationModels)** alla [WWDC 2025](https://developer.apple.com/wwdc25/), dando agli sviluppatori accesso diretto al modello on-device (~3B parametri) che alimenta [Apple Intelligence](https://www.apple.com/apple-intelligence/).
+
+![Apple Foundation Models](https://docs-assets.developer.apple.com/published/9f7f1b47a3caa890481e41a32dfe5dcd/foundation-models-overview@2x.png)
+*Architettura del Foundation Models framework*
 
 > "Tool calling allows the model to autonomously execute code you define in your app."
 > — Apple Developer Documentation
@@ -321,7 +327,10 @@ Google fornisce [AI Edge Gallery](https://github.com/google-ai-edge/gallery) con
 
 ### Cos'è MCP
 
-Il **Model Context Protocol** è uno standard open-source introdotto da Anthropic nel novembre 2024 per standardizzare l'integrazione tra LLM e tool esterni.
+Il **[Model Context Protocol](https://modelcontextprotocol.io/)** è uno standard open-source introdotto da [Anthropic](https://www.anthropic.com/) nel novembre 2024 per standardizzare l'integrazione tra LLM e tool esterni.
+
+![MCP Architecture](https://modelcontextprotocol.io/images/mcp-architecture.png)
+*Architettura del Model Context Protocol*
 
 > MCP è come "USB-C per applicazioni AI" — un connettore universale che permette a qualsiasi modello AI di comunicare con qualsiasi tool attraverso un'interfaccia standardizzata.
 

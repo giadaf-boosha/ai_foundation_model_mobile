@@ -1,6 +1,9 @@
 # Quantizzazione per LLM Mobile: Guida Completa
 
-> Approfondimento tecnico sulle tecniche di quantizzazione per eseguire Large Language Models su dispositivi mobili.
+> Approfondimento tecnico sulle tecniche di [quantizzazione](https://en.wikipedia.org/wiki/Quantization_(signal_processing)) per eseguire [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) su dispositivi mobili.
+
+![Quantization Overview](https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/hf-bitsandbytes-integration/quantization.png)
+*Rappresentazione visiva della quantizzazione: da float32 a int4*
 
 ---
 
@@ -80,7 +83,9 @@ Incorpora la quantizzazione **durante** il processo di addestramento, simulando 
 
 ### GGUF (ex GGML)
 
-Formato sviluppato per [llama.cpp](https://github.com/ggerganov/llama.cpp), ottimizzato per inference su CPU e Apple Silicon.
+Formato sviluppato per [llama.cpp](https://github.com/ggerganov/llama.cpp), ottimizzato per inference su CPU e [Apple Silicon](https://en.wikipedia.org/wiki/Apple_silicon).
+
+> Specifica formato: [GGUF Specification](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md)
 
 **Caratteristiche:**
 - Ottimizzato per CPU e Apple M-series
@@ -104,6 +109,8 @@ Formato sviluppato per [llama.cpp](https://github.com/ggerganov/llama.cpp), otti
 
 Metodo di quantizzazione post-training layer-by-layer che minimizza l'errore di ricostruzione.
 
+> Paper: [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323)
+
 **Caratteristiche:**
 - Ottimizzato per GPU NVIDIA (CUDA)
 - Usa dataset di calibrazione
@@ -116,6 +123,8 @@ Metodo di quantizzazione post-training layer-by-layer che minimizza l'errore di 
 ### AWQ (Activation-Aware Weight Quantization)
 
 Approccio che protegge i pesi "salienti" osservando le distribuzioni delle attivazioni.
+
+> Paper: [AWQ: Activation-aware Weight Quantization](https://arxiv.org/abs/2306.00978)
 
 **Caratteristiche:**
 - Migliore per modelli instruction-tuned
@@ -150,7 +159,10 @@ iOS mobile → CoreML con INT8/INT4
 
 ### Apple Neural Engine e precisione
 
-L'Apple Neural Engine ha evoluto il suo supporto per la quantizzazione:
+L'[Apple Neural Engine](https://machinelearning.apple.com/research/neural-engine-transformers) ha evoluto il suo supporto per la quantizzazione:
+
+![Apple Neural Engine](https://docs-assets.developer.apple.com/published/0c1d51e4d7e36c61756cf72ca16dd01c/optimizing-performance-with-the-coreml-profiler@2x.png)
+*Core ML Profiler per analizzare le performance su Neural Engine*
 
 | Chip | Supporto |
 |------|----------|
@@ -190,7 +202,9 @@ Su hardware recente (A17 Pro, M4), la modalità W8A8 offre:
 
 ### Gemma 3 QAT - Modelli ufficiali
 
-Google fornisce modelli Gemma 3 pre-quantizzati con QAT:
+Google fornisce modelli [Gemma 3](https://ai.google.dev/gemma) pre-quantizzati con QAT:
+
+> Blog: [Gemma 3 QAT Models](https://developers.googleblog.com/en/gemma-3-quantized-aware-trained-state-of-the-art-ai-to-consumer-gpus/)
 
 | Modello | BF16 | INT4 QAT | Riduzione |
 |---------|------|----------|-----------|

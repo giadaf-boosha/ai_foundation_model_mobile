@@ -1,6 +1,9 @@
 # Architetture Agentiche per LLM Mobile: Guida Completa
 
-> Approfondimento tecnico sui pattern architetturali per costruire agenti AI autonomi su dispositivi mobili.
+> Approfondimento tecnico sui pattern architetturali per costruire [agenti AI](https://en.wikipedia.org/wiki/Intelligent_agent) autonomi su dispositivi mobili.
+
+![Agentic AI](https://miro.medium.com/v2/resize:fit:1400/1*JKBKvS8i7qVQS9l9SuBNZw.png)
+*Architettura base di un agente AI con loop percezione-azione*
 
 ---
 
@@ -242,7 +245,7 @@ Struttura gerarchica con agenti supervisor:
 
 ### Trend di mercato (2025-2026)
 
-Secondo Gartner:
+Secondo [Gartner](https://www.gartner.com/en/articles/intelligent-agent-in-ai):
 - **+1,445%** di richieste su multi-agent systems (Q1 2024 → Q2 2025)
 - **40%** delle applicazioni enterprise avranno AI agents entro fine 2026
 - Mercato: $7.8B (2025) → $52B (2030)
@@ -264,7 +267,9 @@ Su mobile, la context window è drasticamente ridotta, rendendo la gestione dell
 
 ### MemGPT: memoria gerarchica
 
-[MemGPT](https://www.leoniemonigatti.com/papers/memgpt.html) implementa una gerarchia di memoria simile ai sistemi operativi:
+[MemGPT](https://arxiv.org/abs/2310.08560) implementa una gerarchia di memoria simile ai sistemi operativi:
+
+> Repository: [cpacker/MemGPT](https://github.com/cpacker/MemGPT)
 
 ```
 ┌─────────────────────────────────────────────┐

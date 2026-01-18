@@ -21,7 +21,7 @@
 
 ### Definizione
 
-Un **foundation model on-device** è un modello di intelligenza artificiale di grandi dimensioni, tipicamente un Large Language Model (LLM), che viene eseguito direttamente sul dispositivo dell'utente finale (smartphone o tablet) anziché su server remoti nel cloud.
+Un **[foundation model](https://en.wikipedia.org/wiki/Foundation_model) on-device** è un modello di intelligenza artificiale di grandi dimensioni, tipicamente un [Large Language Model (LLM)](https://en.wikipedia.org/wiki/Large_language_model), che viene eseguito direttamente sul dispositivo dell'utente finale (smartphone o tablet) anziché su server remoti nel cloud.
 
 Questi modelli sono chiamati "foundation" (fondamentali) perché rappresentano la base su cui costruire applicazioni AI più specifiche. Sono pre-addestrati su enormi quantità di dati testuali e possono essere adattati a compiti diversi senza necessità di riaddestramento completo.
 
@@ -47,7 +47,7 @@ Questi modelli sono chiamati "foundation" (fondamentali) perché rappresentano l
 
 ### Stato dell'arte a gennaio 2026
 
-L'evoluzione hardware ha reso possibile ciò che era impensabile pochi anni fa. I Neural Processing Unit (NPU) moderni raggiungono potenze di calcolo di 70+ TOPS (Trillion Operations Per Second), sufficienti per eseguire modelli con oltre 4 miliardi di parametri a velocità conversazionale.
+L'evoluzione hardware ha reso possibile ciò che era impensabile pochi anni fa. I [Neural Processing Unit (NPU)](https://en.wikipedia.org/wiki/Neural_processing_unit) moderni raggiungono potenze di calcolo di 70+ [TOPS](https://en.wikipedia.org/wiki/TOPS_(unit)) (Trillion Operations Per Second), sufficienti per eseguire modelli con oltre 4 miliardi di parametri a velocità conversazionale.
 
 I benchmark più recenti mostrano prestazioni impressionanti: i dispositivi flagship come iPhone 17 Pro raggiungono circa 136 token al secondo, mentre Galaxy S25 Ultra arriva a 91 token al secondo. Queste velocità permettono conversazioni fluide e naturali.
 
@@ -59,15 +59,19 @@ Le previsioni indicano che modelli da 7 miliardi di parametri diventeranno lo st
 
 ### Foundation Models Framework
 
-Apple ha introdotto il proprio framework per l'AI on-device al WWDC 2025. Si tratta di un sistema integrato verticalmente che fornisce accesso al modello linguistico che alimenta Apple Intelligence, il sistema di intelligenza artificiale personale di Apple.
+Apple ha introdotto il proprio framework per l'AI on-device al [WWDC 2025](https://developer.apple.com/wwdc25/). Si tratta di un sistema integrato verticalmente che fornisce accesso al modello linguistico che alimenta [Apple Intelligence](https://www.apple.com/apple-intelligence/), il sistema di intelligenza artificiale personale di Apple.
+
+> Vedi: [Apple Developer Documentation - Foundation Models](https://developer.apple.com/documentation/FoundationModels)
 
 Il modello on-device di Apple conta circa 3 miliardi di parametri ed è stato specificamente ottimizzato per l'hardware Apple Silicon. A differenza delle soluzioni Android, Apple non permette agli sviluppatori di sostituire questo modello con alternative, garantendo un'esperienza coerente ma limitando la flessibilità.
 
 ### Caratteristiche architetturali
 
-**KV-Cache Sharing**: Apple ha sviluppato un'innovazione chiamata condivisione della cache key-value. Il modello è diviso in due blocchi: il primo contiene il 62,5% dei layer transformer, mentre il secondo contiene il restante 37,5%. Il secondo blocco riutilizza la cache key-value generata dal primo, risparmiando il 37,5% della memoria normalmente richiesta per questa struttura dati.
+**[KV-Cache](https://en.wikipedia.org/wiki/Attention_(machine_learning)#Key-value_attention) Sharing**: Apple ha sviluppato un'innovazione chiamata condivisione della cache key-value. Il modello è diviso in due blocchi: il primo contiene il 62,5% dei layer [transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)), mentre il secondo contiene il restante 37,5%. Il secondo blocco riutilizza la cache key-value generata dal primo, risparmiando il 37,5% della memoria normalmente richiesta per questa struttura dati.
 
-**Quantizzazione a 2-bit**: il modello utilizza una tecnica chiamata "quantization-aware training" a 2 bit. Questo significa che durante l'addestramento il modello ha "imparato" a funzionare bene anche con una rappresentazione numerica estremamente compressa, riducendo drasticamente l'occupazione di memoria.
+**[Quantizzazione](https://en.wikipedia.org/wiki/Quantization_(signal_processing)) a 2-bit**: il modello utilizza una tecnica chiamata "[quantization-aware training](https://arxiv.org/abs/1712.05877)" a 2 bit. Questo significa che durante l'addestramento il modello ha "imparato" a funzionare bene anche con una rappresentazione numerica estremamente compressa, riducendo drasticamente l'occupazione di memoria.
+
+> Approfondimento: [deep_dives/quantization.md](deep_dives/quantization.md)
 
 **Context window fisso**: il modello supporta una finestra di contesto di 4.096 token, senza possibilità di modifica. Questo limite include sia l'input dell'utente che la risposta generata, quindi se l'input occupa 3.000 token, restano solo 1.096 token per la risposta.
 
@@ -79,7 +83,7 @@ Invece di ricevere testo libero che deve essere poi analizzato (con rischio di e
 
 ### LoRA Adapters
 
-LoRA (Low-Rank Adaptation) è una tecnica che permette di personalizzare il comportamento del modello per casi d'uso specifici senza ritrainarlo completamente.
+[LoRA (Low-Rank Adaptation)](https://arxiv.org/abs/2106.09685) è una tecnica che permette di personalizzare il comportamento del modello per casi d'uso specifici senza ritrainarlo completamente.
 
 Il concetto è semplice: invece di modificare tutti i miliardi di parametri del modello, LoRA aggiunge piccole matrici "adapter" che modificano il comportamento solo dove necessario. Nel caso di Apple, questi adapter hanno rank 32 e occupano circa 160 MB ciascuno.
 
@@ -97,9 +101,13 @@ Il framework è disponibile su iOS 26+, iPadOS 26+, macOS 26+ e visionOS 26+. I 
 
 Google offre un ecosistema più frammentato ma flessibile rispetto ad Apple, con due percorsi principali per l'AI on-device.
 
-**Gemini Nano** è il modello proprietario di Google, integrato nativamente in Android attraverso il sistema AICore. Non è un modello open-source e viene gestito interamente dal sistema operativo, che si occupa del download, degli aggiornamenti e dell'ottimizzazione per l'hardware specifico.
+**[Gemini Nano](https://developer.android.com/ai/gemini-nano)** è il modello proprietario di Google, integrato nativamente in Android attraverso il sistema [AICore](https://developer.android.com/reference/android/app/aicore/package-summary). Non è un modello open-source e viene gestito interamente dal sistema operativo, che si occupa del download, degli aggiornamenti e dell'ottimizzazione per l'hardware specifico.
 
-**Gemma** è una famiglia di modelli open-source derivati dalla stessa ricerca che ha prodotto Gemini. Essendo open-source, possono essere utilizzati liberamente, modificati e distribuiti dagli sviluppatori.
+> Vedi anche: [Google Personal Intelligence](deep_dives/personal_intelligence.md) - La nuova feature cloud-based di Gemini
+
+**[Gemma](https://ai.google.dev/gemma)** è una famiglia di modelli open-source derivati dalla stessa ricerca che ha prodotto Gemini. Essendo open-source, possono essere utilizzati liberamente, modificati e distribuiti dagli sviluppatori.
+
+> Repository: [google-gemini/gemma-cookbook](https://github.com/google-gemini/gemma-cookbook)
 
 ### Gemini Nano e AICore
 
@@ -119,7 +127,7 @@ Google fornisce API a diversi livelli di astrazione attraverso ML Kit:
 
 ### Gemma 3n - L'architettura mobile-first
 
-Gemma 3n rappresenta l'evoluzione di Gemma specificamente progettata per dispositivi mobili. È stata sviluppata in collaborazione con i principali produttori di chip mobile: Qualcomm, MediaTek e Samsung.
+[Gemma 3n](https://developers.googleblog.com/en/introducing-gemma-3n/) rappresenta l'evoluzione di Gemma specificamente progettata per dispositivi mobili. È stata sviluppata in collaborazione con i principali produttori di chip mobile: [Qualcomm](https://www.qualcomm.com/), [MediaTek](https://www.mediatek.com/) e [Samsung](https://www.samsung.com/semiconductor/).
 
 **Per-Layer Embeddings (PLE)**: questa innovazione di Google DeepMind riduce drasticamente l'uso di RAM. Invece di caricare tutti gli embedding del vocabolario in memoria contemporaneamente, li carica dinamicamente layer per layer. Il risultato è che modelli con 5-8 miliardi di parametri nominali possono funzionare con il footprint di memoria di modelli da 2-3 miliardi.
 
@@ -129,13 +137,15 @@ Gemma 3n rappresenta l'evoluzione di Gemma specificamente progettata per disposi
 
 ### MediaPipe LLM Inference API
 
-Per chi desidera utilizzare modelli Gemma o altri LLM compatibili con massima flessibilità, Google fornisce MediaPipe. È un framework che permette di caricare modelli in formato TFLite o Task Bundle ed eseguirli localmente.
+Per chi desidera utilizzare modelli Gemma o altri LLM compatibili con massima flessibilità, Google fornisce [MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference). È un framework che permette di caricare modelli in formato [TFLite](https://www.tensorflow.org/lite) o Task Bundle ed eseguirli localmente.
 
 A differenza di ML Kit che usa Gemini Nano gestito dal sistema, con MediaPipe lo sviluppatore ha piena responsabilità: deve scegliere il modello, convertirlo nel formato corretto, includerlo nell'app e gestirne la distribuzione.
 
 ### Google AI Edge Gallery
 
-È un'applicazione sperimentale che permette di testare modelli GenAI direttamente su dispositivo. Funziona completamente offline e supporta il "Bring Your Own Model": gli sviluppatori possono caricare i propri modelli in formato LiteRT per testarli.
+È un'applicazione sperimentale che permette di testare modelli GenAI direttamente su dispositivo. Funziona completamente offline e supporta il "Bring Your Own Model": gli sviluppatori possono caricare i propri modelli in formato [LiteRT](https://ai.google.dev/edge/litert) per testarli.
+
+> Repository: [google-ai-edge/gallery](https://github.com/google-ai-edge/gallery)
 
 L'app include diverse funzionalità dimostrative: chat multi-turno, analisi di immagini, trascrizione audio, e metriche di performance in tempo reale come Time To First Token e velocità di decodifica.
 
@@ -149,9 +159,9 @@ Quando un LLM genera testo, non produce output deterministico. Ad ogni passo, ca
 
 ### Temperature
 
-La temperatura è il parametro più importante e intuitivo. Controlla la "creatività" o "casualità" delle risposte.
+La [temperatura](https://en.wikipedia.org/wiki/Softmax_function#Reinforcement_learning) è il parametro più importante e intuitivo. Controlla la "creatività" o "casualità" delle risposte.
 
-Tecnicamente, la temperatura scala i logit (i valori grezzi prima del softmax) dividendoli per il valore di temperatura. Una temperatura alta "appiattisce" la distribuzione, rendendo più probabili anche i token con probabilità originariamente basse. Una temperatura bassa "acutizza" la distribuzione, concentrando la probabilità sui token già favoriti.
+Tecnicamente, la temperatura scala i [logit](https://en.wikipedia.org/wiki/Logit) (i valori grezzi prima del [softmax](https://en.wikipedia.org/wiki/Softmax_function)) dividendoli per il valore di temperatura. Una temperatura alta "appiattisce" la distribuzione, rendendo più probabili anche i token con probabilità originariamente basse. Una temperatura bassa "acutizza" la distribuzione, concentrando la probabilità sui token già favoriti.
 
 **Temperatura 0**: il modello diventa completamente deterministico, scegliendo sempre il token più probabile (modalità "greedy"). Date le stesse condizioni, produrrà sempre lo stesso output.
 
@@ -173,7 +183,7 @@ Questo previene la selezione di token con probabilità molto bassa che potrebber
 
 ### Top-P (Nucleus Sampling)
 
-Top-P è un'alternativa più adattiva a Top-K. Invece di fissare il numero di token considerati, seleziona dinamicamente il set minimo di token la cui probabilità cumulativa raggiunge P.
+[Top-P (Nucleus Sampling)](https://arxiv.org/abs/1904.09751) è un'alternativa più adattiva a Top-K. Invece di fissare il numero di token considerati, seleziona dinamicamente il set minimo di token la cui probabilità cumulativa raggiunge P.
 
 Con P=0.9, il modello considera i token più probabili finché la loro probabilità cumulativa non supera il 90%. Se pochi token concentrano la maggior parte della probabilità, ne verranno considerati pochi. Se la probabilità è distribuita, ne verranno considerati molti.
 
@@ -233,7 +243,9 @@ Solo quando necessario, la richiesta viene inoltrata a un LLM completo nel cloud
 
 ### Pattern ReAct (Reasoning + Acting)
 
-ReAct è uno dei pattern più influenti per costruire agenti. L'idea centrale è alternare fasi di ragionamento (Thought) con fasi di azione (Action), osservando i risultati (Observation) prima di continuare.
+[ReAct](https://arxiv.org/abs/2210.03629) è uno dei pattern più influenti per costruire agenti. L'idea centrale è alternare fasi di ragionamento (Thought) con fasi di azione (Action), osservando i risultati (Observation) prima di continuare.
+
+> Approfondimento: [deep_dives/agentic_architectures.md](deep_dives/agentic_architectures.md)
 
 Il ciclo è:
 1. THOUGHT: l'agente ragiona su cosa fare per avanzare verso l'obiettivo
@@ -302,7 +314,9 @@ Questo trasforma il modello da generatore di testo a orchestratore di azioni. Il
 
 ### Model Context Protocol (MCP)
 
-MCP è un protocollo open-source creato da Anthropic che standardizza come gli LLM si connettono a strumenti e dati esterni. È stato rapidamente adottato come standard de-facto dall'industria.
+[MCP](https://modelcontextprotocol.io/) è un protocollo open-source creato da [Anthropic](https://www.anthropic.com/) che standardizza come gli LLM si connettono a strumenti e dati esterni. È stato rapidamente adottato come standard de-facto dall'industria.
+
+> Approfondimento: [deep_dives/function_calling.md](deep_dives/function_calling.md)
 
 Prima di MCP, ogni integrazione richiedeva implementazione custom. Con MCP, uno strumento implementato una volta può essere usato da qualsiasi agente compatibile.
 
@@ -310,7 +324,9 @@ L'architettura è client-server: gli MCP Server espongono strumenti e dati, gli 
 
 ### FunctionGemma
 
-FunctionGemma è un modello Google da 270 milioni di parametri, specificamente ottimizzato per function calling on-device. La sua dimensione compatta (288 MB) lo rende eseguibile su qualsiasi smartphone moderno.
+[FunctionGemma](https://blog.google/technology/developers/functiongemma/) è un modello Google da 270 milioni di parametri, specificamente ottimizzato per function calling on-device. La sua dimensione compatta (288 MB) lo rende eseguibile su qualsiasi smartphone moderno.
+
+> Hugging Face: [google/functiongemma-270m-it](https://huggingface.co/google/functiongemma-270m-it)
 
 Il modello base ha un'accuratezza del 58% sui compiti di function calling. Dopo fine-tuning su casi d'uso specifici, l'accuratezza sale all'85%. Questo lo rende pratico per applicazioni reali dove l'utente richiede azioni come "Crea un promemoria per domani" o "Accendi la torcia".
 
@@ -371,7 +387,9 @@ Apple usa QAT a 2-bit per il suo modello on-device, raggiungendo qualità sorpre
 
 ### Formato GGUF
 
-GGUF (GPT-Generated Unified Format) è diventato lo standard per distribuzione di LLM su hardware consumer. Definisce vari livelli di quantizzazione:
+[GGUF](https://github.com/ggerganov/ggml/blob/master/docs/gguf.md) (GPT-Generated Unified Format) è diventato lo standard per distribuzione di LLM su hardware consumer. Definisce vari livelli di quantizzazione:
+
+> Repository: [ggerganov/llama.cpp](https://github.com/ggerganov/llama.cpp)
 
 **Q4_K_M** (4-bit medium): il default consigliato. Buon bilanciamento tra dimensione e qualità.
 
@@ -389,7 +407,7 @@ Oltre alla quantizzazione dei pesi, esistono ottimizzazioni per l'esecuzione:
 
 **KV-Cache**: durante la generazione, memorizza i vettori Key e Value già calcolati per non ricalcolarli ad ogni nuovo token. Fondamentale per velocità di generazione.
 
-**Speculative Decoding**: un modello piccolo e veloce (draft) genera candidati, il modello principale li valida in batch. Se corretti, si accettano tutti insieme. Può raddoppiare o triplicare la velocità.
+**[Speculative Decoding](https://arxiv.org/abs/2211.17192)**: un modello piccolo e veloce (draft) genera candidati, il modello principale li valida in batch. Se corretti, si accettano tutti insieme. Può raddoppiare o triplicare la velocità.
 
 **Per-Layer Embeddings**: innovazione di Gemma 3n. Invece di caricare tutto il vocabolario in memoria, carica gli embedding dinamicamente per layer. Permette modelli nominalmente più grandi con footprint effettivo ridotto.
 
@@ -420,7 +438,7 @@ Apple e Google hanno approcci fondamentalmente diversi all'AI on-device, riflett
 
 ### Hardware AI
 
-**Apple Neural Engine**: presente in tutti i chip A-series e M-series, è un NPU progettato specificamente per machine learning. I chip recenti (A17 Pro, M4) raggiungono 35-40+ TOPS. L'integrazione stretta con il software Apple permette ottimizzazioni impossibili su hardware third-party.
+**[Apple Neural Engine](https://machinelearning.apple.com/research/neural-engine-transformers)**: presente in tutti i chip A-series e M-series, è un NPU progettato specificamente per machine learning. I chip recenti (A17 Pro, M4) raggiungono 35-40+ TOPS. L'integrazione stretta con il software Apple permette ottimizzazioni impossibili su hardware third-party.
 
 **Android NPU**: il panorama è frammentato. Qualcomm Hexagon, MediaTek APU, Samsung NPU e Google TPU (nei Pixel) hanno tutti caratteristiche diverse. Snapdragon 8 Gen 3 raggiunge 45 TOPS, Gen 4 65+, e Gen 5 (2026) promette 100+. Questa frammentazione richiede ottimizzazioni per device.
 
@@ -554,28 +572,31 @@ Google supporta un range più ampio grazie alla varietà di modelli e livelli di
 ## Riferimenti
 
 ### Documentazione Apple
-- Apple Developer Documentation: Foundation Models Framework
-- WWDC25: Meet the Foundation Models Framework
-- WWDC25: Deep dive into the Foundation Models Framework
-- Apple Machine Learning Research: Foundation Models 2025 Updates
-- Tech Note TN3193: Managing the Context Window
+- [Apple Developer Documentation: Foundation Models Framework](https://developer.apple.com/documentation/FoundationModels)
+- [WWDC25: Meet the Foundation Models Framework](https://developer.apple.com/videos/play/wwdc2025/286/)
+- [WWDC25: Deep dive into the Foundation Models Framework](https://developer.apple.com/videos/play/wwdc2025/301/)
+- [Apple Machine Learning Research: Foundation Models 2025 Updates](https://machinelearning.apple.com/research/apple-foundation-models-2025-updates)
+- [Tech Note TN3193: Managing the Context Window](https://developer.apple.com/documentation/technotes/tn3193-managing-the-context-window)
 
 ### Documentazione Google
-- Android Developers: ML Kit GenAI APIs
-- Google AI for Developers: MediaPipe LLM Inference
-- Google AI for Developers: Gemma Mobile Deployment
-- Google Developers Blog: Introducing Gemma 3n
-- Google Blog: FunctionGemma
+- [Android Developers: ML Kit GenAI APIs](https://developers.google.com/ml-kit/genai)
+- [Google AI for Developers: MediaPipe LLM Inference](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference)
+- [Google AI for Developers: Gemma Mobile Deployment](https://ai.google.dev/gemma/docs/core/mobile)
+- [Google Developers Blog: Introducing Gemma 3n](https://developers.googleblog.com/en/introducing-gemma-3n/)
+- [Google Blog: FunctionGemma](https://blog.google/technology/developers/functiongemma/)
+- [Google Blog: Personal Intelligence](https://blog.google/innovation-and-ai/products/gemini-app/personal-intelligence/)
 
 ### Ricerca accademica
-- Apple Intelligence Foundation Language Models Tech Report 2025
-- Optimizing LLMs Using Quantization for Mobile Execution
-- Large Language Model Performance Benchmarking on Mobile Platforms
+- [Apple Intelligence Foundation Language Models Tech Report 2025](https://arxiv.org/abs/2407.21075)
+- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+- [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
+- [The Nucleus Sampling Paper](https://arxiv.org/abs/1904.09751)
 
 ### Risorse comunitarie
-- Awesome Mobile LLM (GitHub)
-- llama.cpp (GitHub)
-- Google AI Edge Gallery (GitHub)
+- [Awesome Mobile LLM (GitHub)](https://github.com/stevelaskaridis/awesome-mobile-llm)
+- [llama.cpp (GitHub)](https://github.com/ggerganov/llama.cpp)
+- [Google AI Edge Gallery (GitHub)](https://github.com/google-ai-edge/gallery)
+- [MLX Swift Examples (GitHub)](https://github.com/ml-explore/mlx-swift-examples)
 
 ---
 
