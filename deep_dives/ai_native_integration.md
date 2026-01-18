@@ -2,6 +2,8 @@
 
 > Come i modelli AI on-device interagiscono con i componenti primitivi dello sviluppo nativo iOS e Android: architetture, pattern, gestione dati e best practice.
 
+**Nota**: Questa guida contiene esempi di codice e implementazioni pratiche. Per una spiegazione teorica e narrativa degli stessi concetti, vedi [ai_native_integration_theory.md](ai_native_integration_theory.md).
+
 ---
 
 ## Indice

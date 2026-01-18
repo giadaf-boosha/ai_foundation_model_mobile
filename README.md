@@ -105,7 +105,8 @@ println(response)
 | [**deep_dives/agentic_architectures.md**](deep_dives/agentic_architectures.md) | ReAct, planning agents, multi-agent |
 | [**deep_dives/function_calling.md**](deep_dives/function_calling.md) | Tool calling Apple/Google, MCP |
 | [**deep_dives/personal_intelligence.md**](deep_dives/personal_intelligence.md) | Google Personal Intelligence (Gen 2026) |
-| [**deep_dives/ai_native_integration.md**](deep_dives/ai_native_integration.md) | AI + Sviluppo Nativo: MVVM, persistenza, data flow |
+| [**deep_dives/ai_native_integration.md**](deep_dives/ai_native_integration.md) | AI + Sviluppo Nativo: MVVM, persistenza, data flow (pratico) |
+| [**deep_dives/ai_native_integration_theory.md**](deep_dives/ai_native_integration_theory.md) | AI + Sviluppo Nativo: guida teorica narrativa |
 
 ---
 
@@ -176,7 +177,8 @@ ai/
 │   ├── agentic_architectures.md
 │   ├── function_calling.md
 │   ├── personal_intelligence.md
-│   └── ai_native_integration.md
+│   ├── ai_native_integration.md
+│   └── ai_native_integration_theory.md
 │
 └── examples/                     # Codice
     ├── ios/                      # Swift examples
