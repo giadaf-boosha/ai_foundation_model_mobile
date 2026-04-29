@@ -5,7 +5,7 @@
 **Guida completa ai Large Language Models su dispositivi mobili iOS e Android**
 
 [![Research Status](https://img.shields.io/badge/status-research-blue?style=for-the-badge)](https://github.com/giadaf-boosha/ai_foundation_model_mobile)
-[![Last Updated](https://img.shields.io/badge/updated-January%202026-green?style=for-the-badge)](#)
+[![Last Updated](https://img.shields.io/badge/updated-April%202026-green?style=for-the-badge)](SOTA_2026.md)
 [![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey?style=for-the-badge)](#)
 [![Language](https://img.shields.io/badge/lang-IT-red?style=for-the-badge)](#)
 [![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)](LICENSE)
@@ -21,6 +21,11 @@
 </div>
 
 ---
+
+## Aggiornamenti recenti
+
+- **29 aprile 2026** — Aggiunto [`SOTA_2026.md`](SOTA_2026.md): aggiornamento allo stato dell'arte con Gemma 4 (2 aprile 2026), Gemini Nano 4 / AICore Developer Preview, iOS 26.4 (`contextSize`, `tokenCount`), MLPerf Inference v6.0, BitNet b1.58 2B4T, NanoQuant, MacBook Pro M5 Pro/Max, MCP roadmap. Aggiunto [`SEMINAR.md`](SEMINAR.md): syllabus completo del seminario UniBO (Prof. Federico Montori, maggio 2026).
+- **Gennaio 2026** — Pubblicazione iniziale della ricerca.
 
 ## Overview
 
