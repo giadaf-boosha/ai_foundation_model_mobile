@@ -24,6 +24,7 @@
 
 ## Aggiornamenti recenti
 
+- **4 maggio 2026** — Aggiunto [`SEMINAR_DECK_CONTENT.md`](SEMINAR_DECK_CONTENT.md): contenuto integrale di tutte le 60 slide del deck del seminario UniBO (testo, codice, tabelle, descrizioni visual con sorgente, speaker notes ~150-200 parole/slide, riferimenti puntuali). Artefatto intermedio pronto per generare il prompt Claude Design via skill `prompt-design-deck`.
 - **29 aprile 2026** — Aggiunto [`SOTA_2026.md`](SOTA_2026.md): aggiornamento allo stato dell'arte con Gemma 4 (2 aprile 2026), Gemini Nano 4 / AICore Developer Preview, iOS 26.4 (`contextSize`, `tokenCount`), MLPerf Inference v6.0, BitNet b1.58 2B4T, NanoQuant, MacBook Pro M5 Pro/Max, MCP roadmap. Aggiunto [`SEMINAR.md`](SEMINAR.md): syllabus completo del seminario UniBO (Prof. Federico Montori, maggio 2026).
 - **Gennaio 2026** — Pubblicazione iniziale della ricerca.
 
@@ -101,6 +102,9 @@ println(response)
 | [**original_report.md**](original_report.md) | Report con esempi Swift e Kotlin |
 | [**RESOURCES.md**](RESOURCES.md) | 100+ link curati |
 | [**comparisons.md**](comparisons.md) | Tabelle comparative dettagliate |
+| [**SEMINAR.md**](SEMINAR.md) | Syllabus seminario UniBO (Prof. Montori, maggio 2026) |
+| [**SEMINAR_DECK_CONTENT.md**](SEMINAR_DECK_CONTENT.md) | Contenuto integrale 60 slide del deck (testo + codice + visual + speaker notes) |
+| [**SOTA_2026.md**](SOTA_2026.md) | Stato dell'arte aprile 2026 (delta su gennaio) |
 
 ### Approfondimenti tematici
 
