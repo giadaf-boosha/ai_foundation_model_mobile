@@ -755,16 +755,17 @@ Adapter LoRA per specializzare il modello senza riaddestrarlo
 Workflow training + entitlement App Store dedicato
 
 ### Body (max 40 parole)
-LoRA aggiunge piccole matrici a basso rango ai layer del modello base. Apple permette di addestrare adapter custom (CreateML / Xcode Adapter Trainer) e distribuirli con l'app, dietro entitlement App Store dedicato. Adapter ~MB, non GB.
+LoRA aggiunge piccole matrici a basso rango ai layer del modello base. Apple fornisce il **Foundation Models adapter training toolkit** (Python + Jupyter); per la distribuzione App Store serve l'entitlement `com.apple.developer.foundation-model-adapter`. Adapter ~MB, non GB.
 
 ### Visual
-- **Descrizione**: tre fasi orizzontali con frecce. (1) "Dati custom" -> (2) "Train LoRA adapter" (Xcode + CreateML) -> (3) "Distribuisci con app" (icona App Store + adapter file ~10-50 MB) -> "Runtime: SystemLanguageModel + adapter caricato". Sotto la fase 3 banner: "Entitlement dedicato richiesto per distribuzione App Store".
+- **Descrizione**: tre fasi orizzontali con frecce. (1) "Dati custom" -> (2) "Train LoRA adapter" (Foundation Models adapter training toolkit, Python + Jupyter) -> (3) "Distribuisci con app" (icona App Store + bundle `.fmadapter` ~10-50 MB) -> "Runtime: SystemLanguageModel + adapter caricato". Sotto la fase 3 banner: "Entitlement `com.apple.developer.foundation-model-adapter` richiesto per distribuzione App Store".
 - **Sorgente suggerita**: diagramma flow custom.
 
 ### Speaker notes (150-200 parole)
-LoRA — Low-Rank Adaptation — e' la tecnica di fine-tuning piu' diffusa nel 2024-2026: invece di aggiornare tutti i pesi del modello base, si aggiungono matrici A·B di rango basso (es. r=8) ai layer di attenzione, e si addestrano solo quelle. Risultato: adapter da pochi MB invece di un modello completo da GB. Apple supporta il pattern via Foundation Models Framework: addestrate l'adapter con tooling Apple (CreateML o un Xcode Adapter Trainer dedicato), lo bundle con la vostra app, e a runtime il sistema lo applica al modello base. Tre vincoli importanti. Uno: serve un entitlement specifico richiesto via Apple Developer per distribuire adapter su App Store — non e' automatico. Due: l'adapter si applica solo al modello sistema corrente; se Apple aggiorna il modello (e' successo in iOS 26.4 minor), gli adapter devono essere ricompilati. Tre: il use case sweet spot e' terminologia di dominio (medicale, legale, gaming) o stile (brand voice). Per logica complessa o knowledge nuova, RAG resta piu' affidabile. [DA VERIFICARE] nome esatto dell'entitlement App Store — non citato letteralmente in SOTA_2026.md.
+LoRA — Low-Rank Adaptation — e' la tecnica di fine-tuning piu' diffusa nel 2024-2026: invece di aggiornare tutti i pesi del modello base, si aggiungono matrici A·B di rango basso (es. r=8) ai layer di attenzione, e si addestrano solo quelle. Risultato: adapter da pochi MB invece di un modello completo da GB. Apple supporta il pattern via Foundation Models Framework: il tooling ufficiale e' il **Foundation Models adapter training toolkit**, distribuito da Apple Developer come pacchetto Python con Jupyter notebook e utility per esportare bundle `.fmadapter`. Bundle l'adapter con la vostra app e a runtime il sistema lo applica al modello base. Tre vincoli importanti. Uno: per distribuire adapter su App Store serve l'entitlement `com.apple.developer.foundation-model-adapter`, richiesto dall'Account Holder del Developer Program — training/test locale non lo richiedono. Due: l'adapter si applica solo al modello sistema corrente; se Apple aggiorna il modello (succede tra iOS minor), gli adapter vanno ricompilati. Tre: il use case sweet spot e' terminologia di dominio (medicale, legale, gaming) o stile (brand voice). Per logica complessa o knowledge nuova, RAG resta piu' affidabile.
 
 ### Riferimenti
+- https://developer.apple.com/apple-intelligence/foundation-models-adapter/
 - https://developer.apple.com/documentation/FoundationModels
 - https://machinelearning.apple.com/research/apple-foundation-models-2025-updates
 - /Users/giadafranceschini/code/ai_foundation_model_mobile/concepts_theory.md
@@ -873,14 +874,14 @@ Da Nano-1 (1.8B testo) a Nano-4 (Gemma 4 multimodale)
 Quattro generazioni in due anni, ogni step un cambio di base model
 
 ### Body (max 40 parole)
-Nano-1 (Pixel 8 Pro 2023): 1.8B / 3.25B, solo testo. Nano-2: contesto esteso. Nano-3: backbone Gemma 3 + multimodalita' immagini. Nano-4 (aprile 2026): Gemma 4 E2B/E4B base, audio/video nativi, tool calling.
+Nano-1 (Pixel 8 Pro, dic. 2023): 1.8 B, solo testo. Nano-2: variante 3.25 B parametri. Nano-3: versione attuale su Pixel 9/10 (parametri non comunicati ufficialmente da Google). Nano-4 (aprile 2026): backbone Gemma 4 E2B/E4B, audio/video nativi, tool calling.
 
 ### Tabella
 | Versione | Anno | Parametri | Base | Capabilities |
 |----------|------|-----------|------|--------------|
-| Nano-1 | 2023 | 1.8 B / 3.25 B | proprietario | Testo |
-| Nano-2 | 2024 | ~3 B | proprietario | Testo, context esteso |
-| Nano-3 | 2025 | ~3 B | Gemma 3 | + Immagini |
+| Nano-1 | dic 2023 | 1.8 B | proprietario (Gemini) | Testo |
+| Nano-2 | 2024 | 3.25 B | proprietario (Gemini) | Testo, context esteso |
+| Nano-3 | 2025 | n.d. (non comunicato) | non comunicato ufficialmente | + Immagini |
 | **Nano-4** | apr 2026 | E2B (~2B) / E4B (~4B) | **Gemma 4** | + Audio/Video, **tool calling**, 128K ctx |
 
 ### Visual
@@ -888,7 +889,7 @@ Nano-1 (Pixel 8 Pro 2023): 1.8B / 3.25B, solo testo. Nano-2: contesto esteso. Na
 - **Sorgente suggerita**: timeline custom.
 
 ### Speaker notes (150-200 parole)
-Gemini Nano e' il modello sistema Android, equivalente concettuale del modello on-device Apple. La storia e' un crescendo di capabilities. Nano-1 nel 2023 era proprietario, solo testo, rilasciato con Pixel 8 Pro: prova di concetto. Nano-2 ha esteso il context. Il salto vero e' Nano-3 nel 2025: Google ha cambiato la base passando a Gemma 3, il proprio modello open weights — significa che la stessa famiglia di modelli ora copre cloud (Gemini), edge (Gemma per server), mobile (Nano). Nano-4 in AICore Developer Preview da aprile 2026 e' basato su Gemma 4 E2B (Fast) ed E4B (Full): qui arriva la multimodalita' completa (audio + video nativi, non solo immagini), il tool calling come feature first-class, e context 128K. Il pattern strategico e' chiaro: Google unifica i modelli, Apple invece tiene il modello sistema separato e proprietario. Trade-off: Apple ha controllo totale e privacy by default; Google ha cadenza di release piu' rapida e capabilities superiori. [DA VERIFICARE] dettagli Nano-1/Nano-2/Nano-3 — SOTA_2026.md cita esplicitamente solo Nano-4; le versioni precedenti sono ricostruzione storica plausibile.
+Gemini Nano e' il modello sistema Android, equivalente concettuale del modello on-device Apple. La storia e' un crescendo di capabilities. Nano-1 a dicembre 2023 era proprietario (1.8 B parametri), solo testo, rilasciato con Pixel 8 Pro come prova di concetto. Nano-2 ha portato 3.25 B parametri e context esteso. Nano-3 nel 2025 ha aggiunto multimodalita' immagini ed e' la versione corrente su Pixel 9/10 — Google non ha pubblicato parametri ne' base model ufficiali, quindi mi astengo dal citare numeri non verificati. Il salto piu' recente e' Nano-4: AICore Developer Preview da aprile 2026, basato esplicitamente su Gemma 4 E2B (Fast, ~4.2 GB on-disk) ed E4B (Full, ~5.9 GB). Qui arrivano audio + video nativi, tool calling come feature first-class, context 128K. Il pattern strategico e' chiaro: con Nano-4 Google unifica la famiglia — la stessa codebase Gemma copre cloud, edge e mobile. Apple invece tiene il modello sistema separato e proprietario. Trade-off: Apple ha controllo totale e privacy by default; Google ha cadenza di release piu' rapida e capabilities superiori, ma con minore trasparenza sui parametri intermedi.
 
 ### Riferimenti
 - https://9to5google.com/2026/04/02/gemini-nano-4-android/
@@ -933,29 +934,30 @@ Gemma 4 e' il rilascio open weights piu' importante del 2026 per il mobile. Quat
 
 ---
 
-## Slide 25 — MatFormer + Per-Layer Embeddings
+## Slide 25 — MatFormer (Gemma 3n) + Per-Layer Embeddings (Gemma 4)
 **Timing**: minuto 48
 **Tipo**: diagram
 
 ### Headline
-Architetture mobile-first: matrioska di transformer + embedding per layer
+Due tecniche mobile-first che attraversano due release Gemma
 
 ### Sottotitolo
-Come Gemma 4 E2B/E4B condividono parametri e riducono memoria
+MatFormer introdotto con Gemma 3n (2025), PLE ereditato in Gemma 4 E2B/E4B
 
 ### Body (max 40 parole)
-**MatFormer** (Matryoshka Transformer): un singolo training produce sub-modelli annidati di dimensione crescente, selezionabili a runtime. **Per-Layer Embeddings (PLE)**: ogni transformer layer ha embedding dedicato invece di condividere uno globale, riduce footprint memoria a parita' di qualita'.
+**MatFormer** (Matryoshka Transformer) — feature **Gemma 3n**: un singolo training produce sub-modelli annidati selezionabili a runtime. **Per-Layer Embeddings (PLE)** — usato in **Gemma 4 E2B/E4B**: ogni layer ha embedding dedicato; riduce footprint memoria a parita' di qualita'.
 
 ### Visual
-- **Descrizione**: due pannelli affiancati. SINISTRA: matrioska di tre rettangoli annidati con label "E2B in E4B in 26B-A4B" — il modello piccolo e' letteralmente un sotto-set di pesi del grande. DESTRA: stack di transformer layer, ciascuno con il proprio piccolo blocco "embedding" attaccato (vs schema classico con un grande embedding condiviso al fondo). Frecce annotate.
+- **Descrizione**: due pannelli affiancati con label di versione. SINISTRA "Gemma 3n — MatFormer": matrioska di tre rettangoli annidati — il modello piccolo e' un sotto-set di pesi del grande. DESTRA "Gemma 4 E2B/E4B — PLE": stack di transformer layer, ciascuno con il proprio piccolo blocco "embedding" attaccato (vs schema classico con un grande embedding condiviso al fondo). Frecce annotate.
 - **Sorgente suggerita**: diagramma concettuale custom.
 
 ### Speaker notes (150-200 parole)
-Due innovazioni architetturali rendono Gemma 4 mobile-first. MatFormer — Matryoshka Transformer — e' una tecnica di training che produce in una singola run un modello "elastico": addestrate il modello grande con loss pesate su sub-network di dimensioni crescenti, e ottenete gratis sub-modelli piu' piccoli che sono letteralmente un subset coerente dei pesi del grande. Implicazione pratica: deployando Gemma 4 26B sul server e Gemma 4 E2B sul telefono, condividete buona parte del comportamento — cache di RAG, prompt template, tool definitions sono trasferibili. Per-Layer Embeddings (PLE) attacca un problema specifico mobile: l'embedding table e' uno dei piu' grandi consumatori di memoria nei piccoli LLM (vocab grandi x dim moderata = centinaia di MB). PLE invece di un grande embedding globale da' a ogni layer un piccolo embedding specializzato — totale parametri equivalente, ma migliore information flow, e quantizzazione piu' efficace (gli embedding sono notoriamente i piu' sensibili alla quantizzazione). A parita' di qualita', footprint memoria ridotto. [DA VERIFICARE] numeri precisi di riduzione footprint per PLE in Gemma 4 e paper specifici MatFormer/PLE — non citati esplicitamente in SOTA_2026.md.
+Due innovazioni architetturali rendono mobile-first la famiglia Gemma. MatFormer — Matryoshka Transformer — e' stato introdotto con **Gemma 3n** nel 2025 (non con Gemma 4): e' una tecnica di training che produce in una singola run un modello "elastico", addestrate il modello grande con loss pesate su sub-network di dimensioni crescenti e ottenete gratis sub-modelli piu' piccoli che sono letteralmente un subset coerente dei pesi del grande. La documentazione Gemma 4 attuale non cita MatFormer come feature delle varianti E2B/E4B. Per-Layer Embeddings (PLE) e' invece il meccanismo che `ai.google.dev/gemma/docs/core` attribuisce esplicitamente a Gemma 4 E2B/E4B. PLE attacca un problema specifico mobile: l'embedding table e' uno dei piu' grandi consumatori di memoria nei piccoli LLM. Invece di un grande embedding globale, PLE da' a ogni layer un piccolo embedding specializzato — totale parametri simile, ma migliore information flow e quantizzazione piu' efficace. A parita' di qualita', footprint memoria ridotto. La distinzione MatFormer (Gemma 3n) vs PLE (Gemma 4) e' importante perche' la confusione e' diffusa anche in articoli di settore.
 
 ### Riferimenti
-- https://ai.google.dev/gemma/docs/core
-- https://huggingface.co/blog/gemma4
+- https://ai.google.dev/gemma/docs/core (Gemma 4, PLE)
+- https://ai.google.dev/gemma/docs/gemma-3n (Gemma 3n, MatFormer)
+- https://huggingface.co/blog/rishiraj/matformer-in-gemma-3n
 - /Users/giadafranceschini/code/ai_foundation_model_mobile/SOTA_2026.md §3.1
 
 ---
@@ -1833,35 +1835,46 @@ Prompt API free-form e FunctionGemma 270M
 Quando le 4 API non bastano: prompt arbitrario + function calling specializzato
 
 ### Body
-GenAi.runInference() e' il free-form prompt su Gemini Nano 4. FunctionGemma 270M e' un modello edge dedicato a function calling con accuracy 85% su mobile-actions. Combinati: agente leggero on-device.
+Prompt API (`GenerativeModel`) e' il free-form prompt su Gemini Nano 4. Per esporre/orchestrare funzioni ad agenti AI Android offre **AppFunctions** (`android.app.appfunctions`, API 36 / Android 16). FunctionGemma 270M va caricato come modello via **LiteRT-LM** o Google AI Edge Gallery — non c'e' una classe `FunctionAgent` ufficiale.
 
 ### Codice
 ```kotlin
-// 2. Prompt API (free-form)
+// 2. Prompt API (free-form, AICore)
 val genAi = GenAi.getClient(GenAiOptions.builder(context).build())
 val out = genAi.runInference(
     "Spiega in italiano cosa fa LiteRT-LM in 3 punti."
 ).get()
 
-// 3. FunctionGemma stub (concettuale)
-val tools = listOf(
-    Tool("getWeather", schema = mapOf("city" to "string"))
-)
-val agent = FunctionAgent(model = FunctionGemma270M, tools = tools)
-agent.run("Che tempo fa a Bologna?")
+// 3. AppFunctions: esporre una funzione invocabile da agenti AI (Android 16, API 36)
+//    Documentazione: https://developer.android.com/ai/appfunctions
+@AppFunctionSerializable
+data class WeatherArgs(val city: String)
+
+class WeatherFunctions : AppFunctionService() {
+    @AppFunction
+    fun getWeather(args: WeatherArgs): String =
+        "A ${args.city} ci sono 22 C e sole."
+}
+
+// 4. FunctionGemma 270M caricato via LiteRT-LM (modello, non SDK)
+//    Repo HuggingFace: google/functiongemma-270m-it
+//    Pipeline: scaricamento .litert -> LiteRT-LM Engine -> tool selection
 ```
 
 ### Visual
-- **Descrizione**: Diagramma a due colonne. Sinistra: Prompt API -> Gemini Nano 4 -> output testo. Destra: User input -> FunctionGemma 270M -> tool selection -> Tool.execute() -> response. Etichetta "FunctionGemma: 270M parametri, 85% accuracy mobile-actions".
-- **Sorgente suggerita**: Disegno ad hoc Mermaid.
+- **Descrizione**: Diagramma a due colonne. Sinistra: Prompt API (`GenerativeModel.startChat`) -> Gemini Nano 4 -> output testo. Destra: AppFunctions (`@AppFunction` registrate dall'app) + FunctionGemma 270M caricato via LiteRT-LM -> selezione tool + argomenti -> esecuzione `AppFunctionService` -> risposta. Etichetta "FunctionGemma 270M: 85% accuracy Mobile Actions".
+- **Sorgente suggerita**: Disegno ad hoc Mermaid o vector custom.
 
 ### Speaker notes
-Due API, due use case diversi. Prompt API e' il free-form: passate qualsiasi prompt e Gemini Nano 4 risponde. E' la API piu' simile a LanguageModelSession di Apple, ma con meno garanzie sul formato dell'output (niente equivalente ufficiale di @Generable, anche se potete fare schema-guided decoding tramite LiteRT-LM). FunctionGemma e' il vero highlight: un modello da soli 270 milioni di parametri, addestrato specificamente su function calling, che raggiunge l'85% di accuracy sui benchmark mobile-actions. La differenza e' che e' specializzato: non gli chiedete di scrivere una poesia, gli chiedete "data questa lista di tool e questo intento utente, quale tool chiami con quali argomenti?". Lo stub Kotlin che vedete e' concettuale - l'API ufficiale e' ancora in evoluzione - ma il pattern e' chiaro: separare il modello "ragionatore" generale dal modello "esecutore" specializzato. Per agenti mobile, FunctionGemma 270M e' un game changer perche' gira anche su device entry-level con 4 GB di RAM. [DA VERIFICARE: API esatta FunctionAgent in Android SDK aprile 2026].
+Due API, due use case diversi. Prompt API e' il free-form: passate qualsiasi prompt a `GenerativeModel.startChat()` e Gemini Nano 4 risponde — equivalente Android di `LanguageModelSession`. Sul lato function calling il quadro e' meno omogeneo. Su Android la primitiva ufficiale per esporre funzioni invocabili da agenti AI e' **AppFunctions**, package `android.app.appfunctions`, introdotta in Android 16 (API level 36): annotate i metodi con `@AppFunction` ed estendete `AppFunctionService`. FunctionGemma 270M non ha un'API SDK chiamata `FunctionAgent` (avevo scritto uno stub fittizio in una versione precedente — corretto): e' un modello pesi-aperti distribuito via HuggingFace e caricato in app via **LiteRT-LM** o tramite l'AI Edge Gallery. Pattern realistico: AppFunctions come superficie di registrazione/discovery delle azioni, FunctionGemma come modello di selezione tool, Gemini Nano 4 come ragionatore. Vincoli: AppFunctions richiede Android 16+ e ha rate limit sull'invocazione cross-app. FunctionGemma 270M gira su device entry-level grazie ai 270M parametri.
 
 ### Riferimenti
 - /Users/giadafranceschini/code/ai_foundation_model_mobile/SEMINAR.md (sezione 6.3 step 2-3)
 - /Users/giadafranceschini/code/ai_foundation_model_mobile/examples/android/FunctionCallingExample.kt
+- https://developer.android.com/ai/appfunctions
+- https://developer.android.com/reference/android/app/appfunctions/package-summary
 - https://blog.google/technology/developers/functiongemma/
+- https://huggingface.co/google/functiongemma-270m-it
 
 ---
 
@@ -2040,16 +2053,16 @@ Voglio che lasciate la sala con qualcosa da fare lunedi'. Tre esercizi, difficol
 ### Headline
 Cosa aspettarsi nei prossimi 60 giorni
 ### Sottotitolo
-WWDC 8-12 giugno, Google I/O maggio — anticipazioni con label "rumor"
+Google I/O 19-20 maggio, WWDC 8-12 giugno — anticipazioni con label "rumor"
 
 ### Body
-Le date sono confermate (per Apple, [DA VERIFICARE] data esatta Google I/O 2026). I contenuti sono educated guess basati su brevetti, beta sviluppatori e signals dei vendor. Distinguete sempre fact da speculation.
+Date confermate ufficialmente: Google I/O 19-20 maggio 2026 (Shoreline Amphitheatre, Mountain View + livestream); Apple WWDC 8-12 giugno 2026. I contenuti degli annunci sono educated guess basati su brevetti, beta sviluppatori e signals. Distinguete sempre fact da speculation.
 
 ### Tabella anticipazioni
 | Evento | Data | Annunci attesi (label) |
 |--------|------|-----------------------|
-| Google I/O 2026 | maggio 2026 [DA VERIFICARE data esatta] | MCP per AICore consumer (rumor); Play for On-Device AI in GA (probabile); Gemma 4 update minori (probabile) |
-| Apple WWDC 2026 | 8-12 giugno 2026 | Core AI framework unificato (rumor forte); Siri Gemini-powered (rumor multi-fonte); Siri Extensions con Tool protocol pubblico (probabile); context window espansa oltre 4096 (probabile); API multimodale pubblica image+audio (probabile) |
+| Google I/O 2026 | **19-20 maggio 2026**, Shoreline Amphitheatre + io.google | MCP per AICore consumer (rumor); Play for On-Device AI in GA (probabile); Gemma 4 update minori (probabile) |
+| Apple WWDC 2026 | **8-12 giugno 2026** | Core AI framework unificato (rumor forte); Siri Gemini-powered (rumor multi-fonte); Siri Extensions con Tool protocol pubblico (probabile); context window espansa oltre 4096 (probabile); API multimodale pubblica image+audio (probabile) |
 
 ### Visual
 - **Descrizione**: Timeline orizzontale maggio-giugno 2026 con due milestone (logo Google I/O e logo Apple WWDC). Sotto ogni milestone, 3-4 bullet con icona "rumor/probabile/confermato".
@@ -2060,6 +2073,8 @@ Trasparenza massima qui: ogni bullet ha una label esplicita. "Confermato" sono d
 
 ### Riferimenti
 - /Users/giadafranceschini/code/ai_foundation_model_mobile/SOTA_2026.md (sezione 12)
+- https://blog.google/innovation-and-ai/technology/developers-tools/io-2026-save-the-date/
+- https://io.google/2026/about
 - https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/
 
 ---
@@ -2181,7 +2196,7 @@ Se non c'e' tempo per tutto in aula, scrivetemi. Email e LinkedIn sotto. Repo ap
 
 ### Contatti
 - **Email**: giada.f@me.com
-- **LinkedIn**: [DA INSERIRE — URL profilo Giada Franceschini]
+- **LinkedIn**: https://www.linkedin.com/in/giadafr/
 - **GitHub**: https://github.com/giadaf-boosha
 - **Repo seminario**: https://github.com/giadaf-boosha/ai_foundation_model_mobile
 
