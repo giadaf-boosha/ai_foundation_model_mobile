@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/giadafranceschini/code/ai_foundation_model_mobile/demo/apple/.build/arm64-apple-macosx/debug/ToolCalling.build/primary.swiftdeps"
+  },
+  "/Users/giadafranceschini/code/ai_foundation_model_mobile/demo/apple/Sources/ToolCalling/main.swift": {
+    "dependencies": "/Users/giadafranceschini/code/ai_foundation_model_mobile/demo/apple/.build/arm64-apple-macosx/debug/ToolCalling.build/main.d",
+    "object": "/Users/giadafranceschini/code/ai_foundation_model_mobile/demo/apple/.build/arm64-apple-macosx/debug/ToolCalling.build/main.swift.o",
+    "swiftmodule": "/Users/giadafranceschini/code/ai_foundation_model_mobile/demo/apple/.build/arm64-apple-macosx/debug/ToolCalling.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/giadafranceschini/code/ai_foundation_model_mobile/demo/apple/.build/arm64-apple-macosx/debug/ToolCalling.build/main.swiftdeps",
+    "diagnostics": "/Users/giadafranceschini/code/ai_foundation_model_mobile/demo/apple/.build/arm64-apple-macosx/debug/ToolCalling.build/main.dia"
+  }
+}

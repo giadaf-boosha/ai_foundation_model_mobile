@@ -13,7 +13,7 @@ struct WeatherTool: Tool {
         let city: String
     }
 
-    func call(arguments: Arguments) async throws -> ToolOutput {
+    func call(arguments: Arguments) async throws -> String {
         // Mock deterministico — niente rete in aula
         let mockData: [String: (Int, String)] = [
             "bologna": (18, "soleggiato"),
@@ -24,13 +24,7 @@ struct WeatherTool: Tool {
         ]
         let key = arguments.city.lowercased()
         let (temp, sky) = mockData[key] ?? (20, "sereno")
-        let json: [String: Any] = [
-            "city": arguments.city,
-            "temperature_celsius": temp,
-            "sky": sky
-        ]
-        let data = try JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted])
-        return ToolOutput(GeneratedContent(String(data: data, encoding: .utf8) ?? ""))
+        return "{\"city\":\"\(arguments.city)\",\"temperature_celsius\":\(temp),\"sky\":\"\(sky)\"}"
     }
 }
 
@@ -46,10 +40,10 @@ struct CalculatorTool: Tool {
         let expression: String
     }
 
-    func call(arguments: Arguments) async throws -> ToolOutput {
+    func call(arguments: Arguments) async throws -> String {
         let expr = NSExpression(format: arguments.expression)
         let result = expr.expressionValue(with: nil, context: nil)
-        return ToolOutput(GeneratedContent("\(result ?? "errore")"))
+        return "\(result ?? "errore")"
     }
 }
 
