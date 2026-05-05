@@ -1,0 +1,4 @@
+apple/.build/
+apple/.swiftpm/
+apple/Package.resolved
+*.log
